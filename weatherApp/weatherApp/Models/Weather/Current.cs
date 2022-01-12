@@ -20,10 +20,10 @@ namespace weatherApp.Models.Weather
         public DateTime Last_Updated { get; set; }
 
         [JsonProperty("temp_c")]
-        public double Temperature_Celcius { get; set; }
+        public decimal Temperature_Celcius { get; set; }
 
         [JsonProperty("temp_f")]
-        public double Temperature_Fahrenheit { get; set; }
+        public decimal Temperature_Fahrenheit { get; set; }
 
         [JsonProperty("is_day")]
         public int Is_day { get; set; }

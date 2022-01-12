@@ -17,6 +17,6 @@ namespace weatherApp.Models.Weather
 
         public DateTime LocalTime { get; set; }
 
-        public double Temperature { get; set; }
+        public decimal Temperature { get; set; }
     }
 }

@@ -1,49 +1,5 @@
-2022-01-12 15:08:49.894 +00:00 [INF] Someinfo
-2022-01-12 15:28:03.933 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API Unauthorized System.Threading.Tasks.Task`1[System.String]
-2022-01-12 15:51:37.377 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 15:52:36.867 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 15:53:33.924 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API
-2022-01-12 15:54:14.405 +00:00 [ERR] No such host is known. (api.weatherapi.come:80)
-2022-01-12 15:54:14.475 +00:00 [ERR] An unhandled exception has occurred while executing the request.
-System.NotSupportedException: Serialization and deserialization of 'System.Type' instances are not supported and should be avoided since they can lead to security issues. Path: $.TargetSite.DeclaringType.
- ---> System.NotSupportedException: Serialization and deserialization of 'System.Type' instances are not supported and should be avoided since they can lead to security issues.
-   at System.Text.Json.Serialization.Converters.TypeConverter.Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
-   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
-   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
-   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
-   --- End of inner exception stack trace ---
-   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(WriteStack& state, NotSupportedException ex)
-   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.Serialization.JsonConverter`1.WriteCoreAsObject(Utf8JsonWriter writer, Object value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.JsonSerializer.WriteCore[TValue](JsonConverter jsonConverter, Utf8JsonWriter writer, TValue& value, JsonSerializerOptions options, WriteStack& state)
-   at System.Text.Json.JsonSerializer.WriteAsyncCore[TValue](Stream utf8Json, TValue value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)
-   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
---- End of stack trace from previous location ---
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
-   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
-   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
-   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
-   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2022-01-12 15:55:39.836 +00:00 [ERR] No such host is known. (api.weatherapi.come:80)
-2022-01-12 15:59:03.724 +00:00 [ERR] No such host is known. (api.weatherapi.come:80)
-2022-01-12 17:00:46.382 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
-2022-01-12 17:09:15.200 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
-2022-01-12 18:36:28.032 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 18:38:24.543 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 18:40:46.296 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 18:44:45.291 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 18:46:58.590 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
-2022-01-12 18:47:16.306 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
-2022-01-12 19:00:00.327 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
-2022-01-12 19:01:37.498 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
+2022-01-12 21:30:30.570 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API BadRequest, No matching location found.
+2022-01-12 21:35:28.142 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 500, 
+2022-01-12 21:37:49.315 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 500, 
+2022-01-12 21:38:21.815 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 400, No matching location found.
+2022-01-12 21:48:56.538 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=london, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.

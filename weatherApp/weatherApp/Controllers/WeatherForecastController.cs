@@ -35,12 +35,18 @@ namespace weatherApp.Controllers
             this.WeatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
         }
 
-        /// <summary> A weather forecast for a given location </summary>
-        /// <response code="200">Returns a forecast summary for the location specified</response>
-        /// <response code="401">If the request is unauthorized</response>  
+        /// <summary> A summary of the weather forecast for a given location. </summary>
+        /// <response code="200">Returns a forecast summary for the location specified.</response>
+        /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
+        /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  
+        /// <response code="403">If the apiKey has has exceeeded usage limit or has been disabled.</response>  
+        /// <response code="500">Interanl application error.</response>  
         [HttpGet("{locationName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastSummary))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDetails))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
         public async Task<IActionResult> Get(string locationName)
         {
             if (string.IsNullOrEmpty(locationName))
@@ -66,9 +72,11 @@ namespace weatherApp.Controllers
                 {
                     ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(await response.Content.ReadAsStringAsync());
 
-                    this.Logger.LogWarning($"[Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API {errorDetails.error.code}, {errorDetails.error.message}");
+                    errorDetails.error.mapErrorCodes();
 
-                    return StatusCode((int)errorDetails.error.HttpStatusCode, errorDetails.error.message);
+                    this.Logger.LogWarning($"[Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API {errorDetails.error.HttpStatusCode}, { errorDetails.error.apiMessage}");
+
+                    return new ObjectResult(errorDetails.error);
                 }
 
             }

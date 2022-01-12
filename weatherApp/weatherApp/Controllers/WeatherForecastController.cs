@@ -25,8 +25,8 @@ namespace AngularApp.Controllers
             this._config = config;
         }
 
-        [HttpGet]
-        public async Task<CurrentForecast> Get()
+        [HttpGet("{cityName}")]
+        public async Task<CurrentForecast> Get(string cityName)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace AngularApp.Controllers
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    HttpResponseMessage response = await client.GetAsync($"current.json?key={apiKey}&q=London&aqi=no");
+                    HttpResponseMessage response = await client.GetAsync($"current.json?key={apiKey}&q={cityName}&aqi=no");
 
                     if (response.IsSuccessStatusCode)
                     {

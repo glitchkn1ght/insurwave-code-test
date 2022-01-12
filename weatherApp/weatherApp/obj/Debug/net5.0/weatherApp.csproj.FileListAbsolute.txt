@@ -43,7 +43,6 @@ C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debu
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\staticwebassets\weatherApp.StaticWebAssets.xml
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\scopedcss\bundle\weatherApp.styles.css
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\weatherApp.RazorTargetAssemblyInfo.cache
-C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\weatherApp.csproj.CopyComplete
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\weatherApp.dll
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\ref\weatherApp.dll
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\weatherApp.pdb

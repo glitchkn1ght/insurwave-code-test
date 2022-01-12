@@ -12,7 +12,7 @@ namespace weatherApp.Utility
         public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast);
     }
 
-    public class standardSummaryMapper : IForecastSummaryMapper
+    public class StandardSummaryMapper : IForecastSummaryMapper
     {
         public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast)
         {

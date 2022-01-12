@@ -14,8 +14,8 @@ namespace weatherApp.DependancyResolution
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IWeatherService, StandardWeatherService>();
-            services.AddScoped<IForecastSummaryMapper, standardSummaryMapper>();
-            services.AddScoped<IForecastMapper, standardForecastMapper>();
+            services.AddScoped<IForecastSummaryMapper, StandardSummaryMapper>();
+            services.AddScoped<IForecastMapper, StandardForecastMapper>();
             return services;
         }
     }

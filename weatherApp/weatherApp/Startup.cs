@@ -12,6 +12,9 @@ namespace weatherApp
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
+    using System;
+    using System.IO;
+    using System.Reflection;
     using weatherApp.DependancyResolution;
     using weatherApp.Models.Configuration;
     using weatherApp.Service;
@@ -30,15 +33,17 @@ namespace weatherApp
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(c => 
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "weatherApp", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddHttpClient<IWeatherService>();
 
             var weatherConfigSettings = Configuration.GetSection("WeatherApi");
-            services.Configure<configSettingsWeatherAPI>(weatherConfigSettings);
+            services.Configure<ConfigSettingsWeatherAPI>(weatherConfigSettings);
 
             services.RegisterServices();
         }
@@ -49,9 +54,15 @@ namespace weatherApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "weatherApp v1"));
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "weather");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 

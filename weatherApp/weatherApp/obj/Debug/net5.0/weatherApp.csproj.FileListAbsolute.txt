@@ -50,3 +50,5 @@ C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debu
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\bin\Debug\net5.0\weatherApp.xml
+C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\net5.0\weatherApp.xml

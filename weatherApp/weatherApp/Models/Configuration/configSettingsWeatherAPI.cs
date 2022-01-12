@@ -5,7 +5,7 @@
 
 namespace weatherApp.Models.Configuration
 {
-    public class configSettingsWeatherAPI
+    public class ConfigSettingsWeatherAPI
     {
         public string APIKey { get; set; }
 

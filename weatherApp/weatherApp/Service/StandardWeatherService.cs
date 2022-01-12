@@ -19,9 +19,9 @@ namespace weatherApp.Service
     public class StandardWeatherService : IWeatherService
     {
         private readonly HttpClient Client;
-        private readonly configSettingsWeatherAPI configSettings;
+        private readonly ConfigSettingsWeatherAPI configSettings;
 
-        public StandardWeatherService(HttpClient httpClient, IOptions<configSettingsWeatherAPI> configWeatherSettings)
+        public StandardWeatherService(HttpClient httpClient, IOptions<ConfigSettingsWeatherAPI> configWeatherSettings)
         {
             this.Client = httpClient;
             this.configSettings = configWeatherSettings.Value;

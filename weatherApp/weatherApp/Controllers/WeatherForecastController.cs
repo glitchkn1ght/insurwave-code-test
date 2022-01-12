@@ -17,7 +17,9 @@ namespace weatherApp.Controllers
     using Newtonsoft.Json;
     using System;
     using System.Net.Http;
+    using Microsoft.AspNetCore.Http;
 
+    [Produces("application/json")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -33,7 +35,12 @@ namespace weatherApp.Controllers
             this.WeatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
         }
 
+        /// <summary> A weather forecast for a given location </summary>
+        /// <response code="200">Returns a forecast summary for the location specified</response>
+        /// <response code="401">If the request is unauthorized</response>  
         [HttpGet("{locationName}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastSummary))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
         public async Task<IActionResult> Get(string locationName)
         {
             if (string.IsNullOrEmpty(locationName))
@@ -61,7 +68,7 @@ namespace weatherApp.Controllers
 
                     this.Logger.LogWarning($"[Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API {errorDetails.error.code}, {errorDetails.error.message}");
 
-                    return StatusCode((int)response.StatusCode);
+                    return StatusCode((int)errorDetails.error.HttpStatusCode, errorDetails.error.message);
                 }
 
             }

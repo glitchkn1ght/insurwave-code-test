@@ -14,11 +14,11 @@ namespace weatherApp.Utility
         CurrentForecastSummary mapWeatherAPIResponse(string payload);
     }
 
-    public class standardForecastMapper : IForecastMapper
+    public class StandardForecastMapper : IForecastMapper
     {
        private IForecastSummaryMapper SummaryMapper { get; set; }
         
-        public standardForecastMapper(IForecastSummaryMapper summaryMapper)
+        public StandardForecastMapper(IForecastSummaryMapper summaryMapper)
         {
             this.SummaryMapper = summaryMapper ?? throw new ArgumentNullException(nameof(summaryMapper));
         }

@@ -39,3 +39,11 @@ System.NotSupportedException: Serialization and deserialization of 'System.Type'
 2022-01-12 15:59:03.724 +00:00 [ERR] No such host is known. (api.weatherapi.come:80)
 2022-01-12 17:00:46.382 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
 2022-01-12 17:09:15.200 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
+2022-01-12 18:36:28.032 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
+2022-01-12 18:38:24.543 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
+2022-01-12 18:40:46.296 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
+2022-01-12 18:44:45.291 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
+2022-01-12 18:46:58.590 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.
+2022-01-12 18:47:16.306 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
+2022-01-12 19:00:00.327 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=LONDON, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
+2022-01-12 19:01:37.498 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 1006, No matching location found.

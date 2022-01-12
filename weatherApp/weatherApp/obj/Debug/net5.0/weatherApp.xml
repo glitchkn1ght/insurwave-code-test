@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>weatherApp</name>
+    </assembly>
+    <members>
+        <member name="M:weatherApp.Controllers.WeatherForecastController.Get(System.String)">
+            <summary> A weather forecast for a given location </summary>
+            <response code="200">Returns a forecast summary for the location specified</response>
+            <response code="401">If the request is unauthorized</response>  
+        </member>
+    </members>
+</doc>

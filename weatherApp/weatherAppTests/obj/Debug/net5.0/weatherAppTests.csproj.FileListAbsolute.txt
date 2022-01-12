@@ -137,3 +137,4 @@ C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherAppTests\obj
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherAppTests\obj\Debug\net5.0\ref\weatherAppTests.dll
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherAppTests\obj\Debug\net5.0\weatherAppTests.pdb
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherAppTests\obj\Debug\net5.0\weatherAppTests.genruntimeconfig.cache
+C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherAppTests\bin\Debug\net5.0\weatherApp.xml

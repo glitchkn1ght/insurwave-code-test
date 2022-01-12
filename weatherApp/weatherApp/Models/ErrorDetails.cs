@@ -8,7 +8,7 @@ namespace weatherApp.Models
     public class ErrorDetails
     {
         public Error error { get; set; }
-}
+    }
 
     public class Error
     {

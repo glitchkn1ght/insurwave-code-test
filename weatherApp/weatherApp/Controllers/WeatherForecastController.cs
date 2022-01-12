@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using weatherApp.Models.Weather;
 using weatherApp.Models;
 using weatherApp.Service;
+using weatherApp.Utility;
 
 namespace AngularApp.Controllers
 {
@@ -17,12 +18,12 @@ namespace AngularApp.Controllers
     {
         private readonly ILogger<WeatherForecastController> Logger;
         private readonly IWeatherService WeatherService;
-        private readonly IConfiguration Config;
+        private readonly IForecastMapper ForecastMapper;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration config, IWeatherService weatherService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IForecastMapper forecastMapper , IWeatherService weatherService)
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
-            this.Config = config ?? throw new ArgumentNullException(nameof(config));
+            this.ForecastMapper = forecastMapper ?? throw new ArgumentNullException(nameof(forecastMapper));
             this.WeatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
         }
 
@@ -42,20 +43,11 @@ namespace AngularApp.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], locationName={locationName}, Status=Success, Message= Successfully retrieved current forecase data from API");
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], locationName={locationName}, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.");
 
-                    WeatherForecast fullForecast = JsonConvert.DeserializeObject<WeatherForecast>(await response.Content.ReadAsStringAsync());
+                    CurrentForecastSummary forecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await response.Content.ReadAsStringAsync());
 
-                    CurrentForecast forecast = new CurrentForecast
-                    {
-                        City = fullForecast.WeatherLocation.LocationName,
-                        Region = fullForecast.WeatherLocation.Region,
-                        Country = fullForecast.WeatherLocation.Country,
-                        LocalTime = fullForecast.WeatherLocation.LocalTime,
-                        Temperature = fullForecast.CurrentConditions.Temperature_Celcius
-                    };
-
-                    return Ok(forecast);
+                    return Ok(forecastSummary);
                 }
                 else
                 {

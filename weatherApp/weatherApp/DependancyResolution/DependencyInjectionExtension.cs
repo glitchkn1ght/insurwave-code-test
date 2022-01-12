@@ -6,6 +6,7 @@
 namespace weatherApp.DependancyResolution
 {
     using Microsoft.Extensions.DependencyInjection;
+    using weatherApp.Utility;
     using weatherApp.Service;
 
     public static class DependencyInjectionExtension
@@ -13,7 +14,8 @@ namespace weatherApp.DependancyResolution
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IWeatherService, StandardWeatherService>();
-
+            services.AddScoped<IForecastSummaryMapper, standardSummaryMapper>();
+            services.AddScoped<IForecastMapper, standardForecastMapper>();
             return services;
         }
     }

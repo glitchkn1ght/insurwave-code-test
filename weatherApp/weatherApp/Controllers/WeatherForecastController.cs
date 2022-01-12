@@ -10,7 +10,7 @@ using weatherApp.Models;
 using weatherApp.Service;
 using weatherApp.Utility;
 
-namespace AngularApp.Controllers
+namespace weatherApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]

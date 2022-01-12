@@ -14,6 +14,10 @@ using System.Threading.Tasks;
 using weatherApp.DependancyResolution;
 using weatherApp.Service;
 using weatherApp.Models.Configuration;
+using weatherApp.Models;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace weatherApp
 {
@@ -36,9 +40,7 @@ namespace weatherApp
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "weatherApp", Version = "v1" });
             });
 
-
             services.AddHttpClient<IWeatherService>();
-
 
             var weatherConfigSettings = Configuration.GetSection("WeatherApi");
             services.Configure<configSettingsWeatherAPI>(weatherConfigSettings);
@@ -48,7 +50,7 @@ namespace weatherApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {

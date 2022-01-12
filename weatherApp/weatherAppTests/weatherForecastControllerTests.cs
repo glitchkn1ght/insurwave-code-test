@@ -1,17 +1,21 @@
-using NUnit.Framework;
-using Moq;
-using weatherApp;
-using weatherApp.Controllers;
-using weatherApp.Models.Weather;
-using weatherApp.Service;
-using weatherApp.Models.Configuration;
-using weatherApp.Models;
-using Microsoft.Extensions.Logging;
-using weatherApp.Utility;
-using System;
+//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherAppTests
 {
+    using NUnit.Framework;
+    using Moq;
+    using weatherApp;
+    using weatherApp.Controllers;
+    using weatherApp.Models.Weather;
+    using weatherApp.Service;
+    using weatherApp.Models.Configuration;
+    using weatherApp.Models;
+    using Microsoft.Extensions.Logging;
+    using weatherApp.Utility;
+    using System;
 
     [TestFixture]
     public class weatherForecastControllerTests
@@ -52,7 +56,6 @@ namespace weatherAppTests
                     this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, null, this.weatherServiceMock.Object);
                 });
         }
-
 
         [Test]
         public void WhenConstructorCalledWithNullService_ThenArgNullExceptionThrown()

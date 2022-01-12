@@ -1,17 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using weatherApp.Models.Weather;
-using weatherApp.Models;
-using weatherApp.Service;
-using weatherApp.Utility;
+﻿//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Controllers
 {
+    using System.Threading.Tasks;
+    using weatherApp.Models.Weather;
+    using weatherApp.Models;
+    using weatherApp.Models.Response;
+    using weatherApp.Service;
+    using weatherApp.Utility;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
+    using System;
+    using System.Net.Http;
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

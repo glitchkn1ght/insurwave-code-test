@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Models.Weather
 {
+    using System;
+
     public class CurrentForecastSummary
     {
         public string City { get; set; }

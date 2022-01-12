@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net.Http;
-using weatherApp.Models.Weather;
-using Newtonsoft.Json;
+﻿//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Utility
 {
-   public interface IForecastMapper
+    using Newtonsoft.Json;
+    using System;
+    using weatherApp.Models.Weather;
+
+    public interface IForecastMapper
    {
         CurrentForecastSummary mapWeatherAPIResponse(string payload);
     }
-
 
     public class standardForecastMapper : IForecastMapper
     {

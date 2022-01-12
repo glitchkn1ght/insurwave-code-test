@@ -1,26 +1,21 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using weatherApp.DependancyResolution;
-using weatherApp.Service;
-using weatherApp.Models.Configuration;
-using weatherApp.Models;
-using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
+//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.OpenApi.Models;
+    using weatherApp.DependancyResolution;
+    using weatherApp.Models.Configuration;
+    using weatherApp.Service;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -46,7 +41,6 @@ namespace weatherApp
             services.Configure<configSettingsWeatherAPI>(weatherConfigSettings);
 
             services.RegisterServices();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net.Http;
-using weatherApp.Models.Weather;
-using Newtonsoft.Json;
+﻿//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Utility
 {
+    using weatherApp.Models.Weather;
+
     public interface IForecastSummaryMapper 
     {
         public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast);

@@ -1,8 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Models.Weather
 {
+    using Newtonsoft.Json;
+    using System;
+
     public class Current
     {
         [JsonProperty("condition")]

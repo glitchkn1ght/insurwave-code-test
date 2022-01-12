@@ -5,13 +5,11 @@
 
 namespace weatherApp.Service
 {
-    using weatherApp.Models.Configuration;
-    using weatherApp.Models.Weather;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using System;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using weatherApp.Models.Configuration;
 
     public interface IWeatherService
     { 

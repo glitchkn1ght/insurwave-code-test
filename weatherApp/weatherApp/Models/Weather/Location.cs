@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace AngularApp.Models.Weather
+namespace weatherApp.Models.Weather
 {
     public class Location
     {

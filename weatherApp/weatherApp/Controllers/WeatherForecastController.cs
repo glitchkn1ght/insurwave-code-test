@@ -3,8 +3,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using weatherApp.Service;
 using System.Threading.Tasks;
-using AngularApp.Models.Weather;
+using weatherApp.Models.Weather;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -16,57 +17,49 @@ namespace AngularApp.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IConfiguration _config;
+        private readonly ILogger<WeatherForecastController> Logger;
+        private readonly IWeatherService WeatherService;
+        private readonly IConfiguration Config;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration config)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration config, IWeatherService weatherService)
         {
-            this._logger = logger;
-            this._config = config;
+            this.Logger = logger;
+            this.Config = config;
+            this.WeatherService = weatherService;
         }
 
-        [HttpGet("{cityName}")]
-        public async Task<CurrentForecast> Get(string cityName)
+        [HttpGet("{locationName}")]
+        public async Task<CurrentForecast> Get(string locationName)
         {
             try
             {
-                string baseURL = _config.GetValue<string>("WeatherApi:BaseUrl");
-                string apiKey = _config.GetValue<string>("WeatherApi:APIKey");
+                HttpResponseMessage response = await this.WeatherService.GetCurrentConditions(locationName);
 
-
-                using (var client = new HttpClient())
+                if (response.IsSuccessStatusCode)
                 {
-                    client.BaseAddress = new Uri(baseURL);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    WeatherForecast fullForecast = JsonConvert.DeserializeObject<WeatherForecast>(await response.Content.ReadAsStringAsync());
 
-                    HttpResponseMessage response = await client.GetAsync($"current.json?key={apiKey}&q={cityName}&aqi=no");
-
-                    if (response.IsSuccessStatusCode)
+                    CurrentForecast forecast = new CurrentForecast
                     {
-                        WeatherForecast fullForecast = JsonConvert.DeserializeObject<WeatherForecast>(await response.Content.ReadAsStringAsync());
+                        City = fullForecast.WeatherLocation.LocationName,
+                        Region = fullForecast.WeatherLocation.Region,
+                        Country = fullForecast.WeatherLocation.Country,
+                        LocalTime = fullForecast.WeatherLocation.LocalTime,
+                        Temperature = fullForecast.CurrentConditions.Temperature_Celcius
+                    };
 
-                        CurrentForecast forecast = new CurrentForecast
-                        {
-                            City = fullForecast.WeatherLocation.LocationName,
-                            Region = fullForecast.WeatherLocation.Region,
-                            Country = fullForecast.WeatherLocation.Country,
-                            LocalTime = fullForecast.WeatherLocation.LocalTime,
-                            Temperature = fullForecast.CurrentConditions.Temperature_Celcius
-                        };
-
-                        return forecast;
-                    }
-                    else
-                    {
-                        return new CurrentForecast();
-                    }
+                    return forecast;
                 }
+                else
+                {
+                    return new CurrentForecast();
+                }
+                
             }
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString());
+                this.Logger.LogError(ex.Message.ToString());
 
                 return new CurrentForecast();
             }

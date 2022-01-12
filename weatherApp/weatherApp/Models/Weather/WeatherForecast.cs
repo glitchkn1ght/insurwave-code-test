@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace AngularApp.Models.Weather
+namespace weatherApp.Models.Weather
 {
     public class WeatherForecast
     {

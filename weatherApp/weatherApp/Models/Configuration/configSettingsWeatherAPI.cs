@@ -11,7 +11,7 @@ namespace weatherApp.Models.Configuration
 
         public string BaseURL { get; set; }
         
-        public string ResourceURL { get; set; }
+        public string CurrentResourceURL { get; set; }
 
         public string ContentType { get; set; }
 

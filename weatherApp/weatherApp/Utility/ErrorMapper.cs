@@ -10,7 +10,7 @@ namespace weatherApp.Utility
         public int MapApiErrorCode(int apiErrorCode);
     }
     
-    public class ErrorMapper
+    public class StandardErrorMapper : IErrorMapper
     {
         public int MapApiErrorCode(int apiErrorCode)
         {

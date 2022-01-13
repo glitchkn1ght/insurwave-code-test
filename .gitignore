@@ -2,3 +2,11 @@
 *.cache
 weatherApp/weatherApp/Logs/weatherApp20220113.txt
 weatherApp/.vs/weatherApp/v16/.suo
+*.cache
+*.cache
+*.cache
+weatherApp/weatherApp/obj/Debug/netcoreapp3.1/weatherApp.csproj.AssemblyReference.cache
+weatherApp/weatherApp/obj/Debug/netcoreapp3.1/weatherApp.pdb
+weatherApp/weatherApp/obj/Debug/netcoreapp3.1/weatherApp.dll
+weatherApp/weatherApp/bin/Debug/netcoreapp3.1/weatherApp.dll
+weatherApp/weatherApp/bin/Debug/netcoreapp3.1/weatherApp.pdb

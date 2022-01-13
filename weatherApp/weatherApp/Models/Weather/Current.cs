@@ -29,10 +29,10 @@ namespace weatherApp.Models.Weather
         public int Is_day { get; set; }
 
         [JsonProperty("wind_mph")]
-        public double Wind_Mph { get; set; }
+        public decimal Wind_Mph { get; set; }
 
         [JsonProperty("wind_kph")]
-        public double Wind_Kph { get; set; }
+        public decimal Wind_Kph { get; set; }
 
         [JsonProperty("wind_degree")]
         public int Wind_Degree { get; set; }
@@ -41,16 +41,16 @@ namespace weatherApp.Models.Weather
         public string Wind_Dir { get; set; }
 
         [JsonProperty("pressure_mb")]
-        public double Pressure_mb { get; set; }
+        public decimal Pressure_mb { get; set; }
 
         [JsonProperty("pressure_in")]
-        public double Pressure_in { get; set; }
+        public decimal Pressure_in { get; set; }
 
         [JsonProperty("precip_mm")]
-        public double Precipitation_mm { get; set; }
+        public decimal Precipitation_mm { get; set; }
 
         [JsonProperty("precip_in")]
-        public double Precipitation_in { get; set; }
+        public decimal Precipitation_in { get; set; }
 
         [JsonProperty("humidity")]
         public int Humidity { get; set; }
@@ -59,25 +59,25 @@ namespace weatherApp.Models.Weather
         public int Cloud { get; set; }
 
         [JsonProperty("feelslike_c")]
-        public double Feelslike_Celcius { get; set; }
+        public decimal Feelslike_Celcius { get; set; }
 
         [JsonProperty("Feelslike_f")]
-        public double Feelslike_Fahrenheit { get; set; }
+        public decimal Feelslike_Fahrenheit { get; set; }
 
         [JsonProperty("vis_km")]
-        public double Visibility_Km { get; set; }
+        public decimal Visibility_Km { get; set; }
 
         [JsonProperty("vis_miles")]
-        public double Visibility_Miles { get; set; }
+        public decimal Visibility_Miles { get; set; }
 
         [JsonProperty("uv")]
-        public double UV { get; set; }
+        public decimal UV { get; set; }
 
         [JsonProperty("gust_mph")]
-        public double Gust_Mph { get; set; }
+        public decimal Gust_Mph { get; set; }
 
         [JsonProperty("gust_kph")]
-        public double Gust_Kph { get; set; }
+        public decimal Gust_Kph { get; set; }
 
     }
 }

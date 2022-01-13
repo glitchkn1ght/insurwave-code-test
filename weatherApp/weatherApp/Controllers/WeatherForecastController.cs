@@ -49,13 +49,6 @@ namespace weatherApp.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
         public async Task<IActionResult> Get(string locationName)
         {
-            if (string.IsNullOrEmpty(locationName))
-            {
-                this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failed, Message=locationName is null or empty");
-
-                return BadRequest();
-            }
-
             try
             {
                 HttpResponseMessage response = await this.WeatherService.GetCurrentConditions(locationName);
@@ -66,7 +59,7 @@ namespace weatherApp.Controllers
 
                     CurrentForecastSummary forecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await response.Content.ReadAsStringAsync());
 
-                    return Ok(forecastSummary);
+                    return new OkObjectResult(forecastSummary);
                 }
                 else
                 {
@@ -76,16 +69,16 @@ namespace weatherApp.Controllers
 
                     this.Logger.LogWarning($"[Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API {errorDetails.error.HttpStatusCode}, { errorDetails.error.apiMessage}");
 
-                    return new ObjectResult(errorDetails.error);
+                    return new ObjectResult(errorDetails.error) { StatusCode = errorDetails.error.HttpStatusCode};
                 }
 
             }
 
             catch (Exception ex)
             {
-                this.Logger.LogError(ex.Message.ToString());
+                this.Logger.LogError($"[Operation=Get(WeatherForecast)], Status=Failed, Message=Exeception thrown: {ex.Message}");
 
-                return StatusCode(500);
+                return new StatusCodeResult(500);
             }
         }
     }

@@ -27,12 +27,14 @@ namespace weatherApp.Controllers
         private readonly ILogger<WeatherForecastController> Logger;
         private readonly IWeatherService WeatherService;
         private readonly IForecastMapper ForecastMapper;
+        private readonly IErrorMapper ErrorMapper;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IForecastMapper forecastMapper , IWeatherService weatherService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IForecastMapper forecastMapper , IWeatherService weatherService, IErrorMapper errorMapper)
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
             this.ForecastMapper = forecastMapper ?? throw new ArgumentNullException(nameof(forecastMapper));
             this.WeatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
+            this.ErrorMapper = errorMapper ?? throw new ArgumentNullException(nameof(errorMapper));
         }
 
         /// <summary> A summary of the weather forecast for a given location. </summary>
@@ -65,7 +67,7 @@ namespace weatherApp.Controllers
                 {
                     ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(await response.Content.ReadAsStringAsync());
 
-                    errorDetails.error.mapErrorCodes();
+                    errorDetails.error.HttpStatusCode = ErrorMapper.MapApiErrorCode(errorDetails.error.apiCode);
 
                     this.Logger.LogWarning($"[Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API {errorDetails.error.HttpStatusCode}, { errorDetails.error.apiMessage}");
 
@@ -78,7 +80,7 @@ namespace weatherApp.Controllers
             {
                 this.Logger.LogError($"[Operation=Get(WeatherForecast)], Status=Failed, Message=Exeception thrown: {ex.Message}");
 
-                return new StatusCodeResult(500);
+                return new ObjectResult(ex) {StatusCode = 500 };
             }
         }
     }

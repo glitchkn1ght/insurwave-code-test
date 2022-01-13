@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "fEJ5xwUzcLc9449EQQcvF9r4cqGmJBtA3mjf976riMNk/BXaSkDf/8X/FyDmucK4dJJJdZPpBIr90eapLZ/4cA==",
+  "dgSpecHash": "A9yKqIC8hktEE0ht68XnjpP2jCI6Aw1MCrLhbbPd4A5tBrrZkw/sohZRf/o7gva+14JfYUPgozIAhKmpWf2nIA==",
   "success": true,
   "projectFilePath": "C:\\Users\\jnpsm\\source\\repos\\code-test-james-smith\\weatherApp\\weatherAppTests\\weatherAppTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jnpsm\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\coverlet.collector\\3.0.2\\coverlet.collector.3.0.2.nupkg.sha512",
-    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\5.0.0\\microsoft.aspnetcore.jsonpatch.5.0.0.nupkg.sha512",
-    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\5.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.5.0.0.nupkg.sha512",
+    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.10\\microsoft.aspnetcore.jsonpatch.3.1.10.nupkg.sha512",
+    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.10\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.10.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.codecoverage\\16.9.4\\microsoft.codecoverage.16.9.4.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.dotnet.internalabstractions\\1.0.0\\microsoft.dotnet.internalabstractions.1.0.0.nupkg.sha512",

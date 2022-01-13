@@ -8,6 +8,7 @@ namespace weatherApp
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;
     using Serilog;
+    using System;
 
     public class Program
     {

@@ -3,3 +3,6 @@
 2022-01-13 10:22:17.755 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 400, No matching location found.
 2022-01-13 10:49:57.569 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=london, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
 2022-01-13 10:50:09.515 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 400, No matching location found.
+2022-01-13 11:14:47.609 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 400, No matching location found.
+2022-01-13 11:17:50.070 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 400, No matching location found.
+2022-01-13 11:33:37.715 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=london, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.

@@ -15,30 +15,6 @@ namespace weatherApp.Models.Response
 
     public class Error
     {
-        public void mapErrorCodes()
-        {
-            switch (this.apiCode)
-            {
-                case 1002:
-                case 2006:
-                    HttpStatusCode = 401;
-                    break;
-                case 1003:
-                case 1005:
-                case 1006:
-                case 9999:
-                    HttpStatusCode = 400;
-                    break;
-                case 2007:
-                case 2008:
-                    HttpStatusCode = 403;
-                    break;
-                default:
-                    HttpStatusCode = 500;
-                    break;
-            }
-        }
-
         public int HttpStatusCode { get; set; }
 
         [JsonProperty("code")]

@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "0VNrMbcXxSbvAllv30oPLSw3hXI/ptGigFHzeIFZLd+yrKXEd3aOO1VMliQ5LXTET5Az43WZNkhWR5m1AMUFXA==",
+  "dgSpecHash": "5xf7hKlEVvWCy50C06kNVOyzWO6LYhgd8yIAsw3eE8IFyWVhfQcdsv9NFpsbcnZN97NEjplVK05pyWy0xzx+eA==",
   "success": true,
   "projectFilePath": "C:\\Users\\jnpsm\\source\\repos\\code-test-james-smith\\weatherApp\\weatherApp\\weatherApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\5.0.0\\microsoft.aspnetcore.jsonpatch.5.0.0.nupkg.sha512",
-    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\5.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.5.0.0.nupkg.sha512",
+    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.10\\microsoft.aspnetcore.jsonpatch.3.1.10.nupkg.sha512",
+    "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.10\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.10.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\jnpsm\\.nuget\\packages\\microsoft.extensions.configuration\\2.0.0\\microsoft.extensions.configuration.2.0.0.nupkg.sha512",

@@ -32,6 +32,8 @@ namespace weatherAppTests
 
         private Mock<IWeatherService> weatherServiceMock;
 
+        private Mock<IErrorMapper> errorMapperMock; 
+
         private WeatherForecastController weatherForecastController;
 
         private StandardForecastMapper forecastMapper;
@@ -44,6 +46,7 @@ namespace weatherAppTests
             this.LoggerMock = new Mock<ILogger<WeatherForecastController>>();
             this.forecastMapperMock = new Mock<IForecastMapper>();
             this.weatherServiceMock = new Mock<IWeatherService>();
+            this.errorMapperMock = new Mock<IErrorMapper>();
         }
 
         public CurrentForecastSummary GetValidForecastSummary() 
@@ -129,7 +132,7 @@ namespace weatherAppTests
             Assert.Throws(
                 Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("logger"), delegate
                 {
-                    this.weatherForecastController = new WeatherForecastController(null, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+                    this.weatherForecastController = new WeatherForecastController(null, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
                 });
         }
 
@@ -139,7 +142,7 @@ namespace weatherAppTests
             Assert.Throws(
                 Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("forecastMapper"), delegate
                 {
-                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, null, this.weatherServiceMock.Object);
+                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, null, this.weatherServiceMock.Object, this.errorMapperMock.Object);
                 });
         }
 
@@ -149,9 +152,20 @@ namespace weatherAppTests
             Assert.Throws(
                 Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("weatherService"), delegate
                 {
-                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, null);
+                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, null, this.errorMapperMock.Object);
                 });
         }
+
+        [Test]
+        public void WhenConstructorCalledWithNullErrorMapper_ThenArgNullExceptionThrown()
+        {
+            Assert.Throws(
+                Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("errorMapper"), delegate
+                {
+                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, null);
+                });
+        }
+
 
         [Test]
         public void WhenConstructorCalledWithValidArguements_ThenNoExceptionThrown()
@@ -159,7 +173,7 @@ namespace weatherAppTests
             Assert.DoesNotThrow(
                 delegate
                 {
-                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+                    this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
                 });
         }
 
@@ -173,38 +187,13 @@ namespace weatherAppTests
 
             this.forecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>())).Returns(GetValidForecastSummary());
 
-            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
             ObjectResult actual = (ObjectResult)this.weatherForecastController.Get("london").Result;
 
             Assert.AreEqual(200, actual.StatusCode);
 
         }
-
-        [Test]
-        public void WhenWeatherServiceReturns_ThenGetReturn400BadRequest()
-        {
-
-            ErrorDetails errordetails = new ErrorDetails
-            {
-                error = new Error 
-                { 
-                   apiCode = 1006,
-                   apiMessage = "No matching location found."
-                }
-            };
-                
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(errordetails));
-
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = content });
-
-            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
-
-            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get("").Result;
-
-            Assert.AreEqual(400, actual.StatusCode);
-        }
-
 
         [TestCase(1003)]
         [TestCase(1005)]
@@ -225,7 +214,9 @@ namespace weatherAppTests
 
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = content });
 
-            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+            this.errorMapperMock.Setup(x => x.MapApiErrorCode(It.IsAny<int>())).Returns(400);
+
+            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
             ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
 
@@ -249,7 +240,9 @@ namespace weatherAppTests
 
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = content });
 
-            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+            this.errorMapperMock.Setup(x => x.MapApiErrorCode(It.IsAny<int>())).Returns(401);
+
+            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
             ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
 
@@ -273,18 +266,21 @@ namespace weatherAppTests
 
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = content });
 
-            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+            this.errorMapperMock.Setup(x => x.MapApiErrorCode(It.IsAny<int>())).Returns(403);
+
+            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
             ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
 
             Assert.AreEqual(403, actual.StatusCode);
         }
 
-        public void WhenExceptiontThrown_ThenGetReturn403Forbidden()
+        [Test]
+        public void WhenExceptiontThrown_ThenGetReturn500InternalServerError()
         {
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).Throws(new Exception());
 
-            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object);
+            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
             ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
 

@@ -1,13 +1,13 @@
 ﻿//Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 13/01/2022 Ticket-3 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp.Models.Astronomy
+namespace weatherApp.Models
 {
     using Newtonsoft.Json;
 
-    public class Astronomy
+    public class Astro
     {
         [JsonProperty("sunrise")]
         public string SunriseTime { get; set; }

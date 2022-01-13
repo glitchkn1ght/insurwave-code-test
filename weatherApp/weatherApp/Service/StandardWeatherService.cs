@@ -31,7 +31,7 @@ namespace weatherApp.Service
         {
             this.Client.BaseAddress = new Uri(configSettings.BaseURL);
 
-            var resource = $"{configSettings.ResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}&aqi={configSettings.GetAirQualityData}";
+            var resource = $"{configSettings.CurrentResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}&aqi={configSettings.GetAirQualityData}";
 
             var response = await this.Client.GetAsync(resource);
 

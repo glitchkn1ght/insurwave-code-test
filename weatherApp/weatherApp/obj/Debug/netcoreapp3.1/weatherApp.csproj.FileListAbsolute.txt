@@ -53,3 +53,4 @@ C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debu
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\netcoreapp3.1\weatherApp.xml
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\netcoreapp3.1\weatherApp.pdb
 C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\netcoreapp3.1\weatherApp.genruntimeconfig.cache
+C:\Users\jnpsm\source\repos\code-test-james-smith\weatherApp\weatherApp\obj\Debug\netcoreapp3.1\weatherApp.csproj.CopyComplete

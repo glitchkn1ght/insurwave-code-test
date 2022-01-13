@@ -45,6 +45,9 @@ namespace weatherApp
             var weatherConfigSettings = Configuration.GetSection("WeatherApi");
             services.Configure<ConfigSettingsWeatherAPI>(weatherConfigSettings);
 
+            var forecastsummaryConfigSettings = Configuration.GetSection("ForecastSummaryConfig");
+            services.Configure<ConfigSettingsForecastSummary>(forecastsummaryConfigSettings);
+
             services.RegisterServices();
         }
 

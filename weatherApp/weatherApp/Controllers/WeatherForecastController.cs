@@ -55,7 +55,7 @@ namespace weatherApp.Controllers
         /// <response code="500">Interanl application error.</response>  
         [HttpGet("{locationName}/{locationDateTime}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentConditionsAndAstronomy))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(List<ErrorDetails>))]
+        [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<ErrorDetails>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDetails))]

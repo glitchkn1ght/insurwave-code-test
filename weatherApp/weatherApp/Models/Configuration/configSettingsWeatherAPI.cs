@@ -1,6 +1,7 @@
 ﻿//Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 13/01/2022 Ticket3 JS Team darkSaber - Added AstronomyResourceURL
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Models.Configuration
@@ -12,6 +13,8 @@ namespace weatherApp.Models.Configuration
         public string BaseURL { get; set; }
         
         public string CurrentResourceURL { get; set; }
+
+        public string AstronomyResourceURL { get; set; }
 
         public string ContentType { get; set; }
 

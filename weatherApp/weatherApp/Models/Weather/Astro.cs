@@ -12,7 +12,7 @@ namespace weatherApp.Models
         [JsonProperty("sunrise")]
         public string SunriseTime { get; set; }
 
-        [JsonProperty("sunrise")]
+        [JsonProperty("sunset")]
         public string SunsetTime { get; set; }
 
         [JsonProperty("moonrise")]

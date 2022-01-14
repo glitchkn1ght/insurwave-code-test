@@ -14,6 +14,8 @@ namespace weatherApp.Service
     public interface IWeatherService
     { 
         public Task<HttpResponseMessage> GetCurrentConditions(string locationName);
+
+        public Task<HttpResponseMessage> GetAstronomyConditions(string locationName, string locationDateTime);
     }
 
     public class StandardWeatherService : IWeatherService
@@ -25,12 +27,11 @@ namespace weatherApp.Service
         {
             this.Client = httpClient;
             this.configSettings = configWeatherSettings.Value;
+            this.Client.BaseAddress = new Uri(configSettings.BaseURL);
         }
 
         public async Task<HttpResponseMessage> GetCurrentConditions(string locationName)
         {
-            this.Client.BaseAddress = new Uri(configSettings.BaseURL);
-
             var resource = $"{configSettings.CurrentResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}&aqi={configSettings.GetAirQualityData}";
 
             var response = await this.Client.GetAsync(resource);
@@ -38,11 +39,9 @@ namespace weatherApp.Service
             return response;
         }
 
-        public async Task<HttpResponseMessage> GetCurrentConditions(string locationName, string locationDateTime)
+        public async Task<HttpResponseMessage> GetAstronomyConditions(string locationName, string locationDateTime)
         {
-            this.Client.BaseAddress = new Uri(configSettings.BaseURL);
-
-            var resource = $"{configSettings.ResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}&aqi={configSettings.GetAirQualityData}";
+            var resource = $"{configSettings.AstronomyResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}&adt={locationDateTime}";
 
             var response = await this.Client.GetAsync(resource);
 

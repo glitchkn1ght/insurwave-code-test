@@ -100,7 +100,6 @@ namespace weatherApp.Controllers
             }
         }
 
-
         private async Task<bool> GetCurrentConditions(string locationName)
         {
             HttpResponseMessage currentConditionsResponse = await this.WeatherService.GetCurrentConditions(locationName);
@@ -115,10 +114,8 @@ namespace weatherApp.Controllers
             }
             else
             {
-                ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(await currentConditionsResponse.Content.ReadAsStringAsync());
-
-                errorDetails.error.HttpStatusCode = ErrorMapper.MapApiErrorCode(errorDetails.error.apiCode);
-
+                ErrorDetails errorDetails = this.ErrorMapper.MapErrorDetails(await currentConditionsResponse.Content.ReadAsStringAsync(),"current");
+                    
                 this.ErrorList.Add(errorDetails);
 
                 this.Logger.LogWarning($"[Operation=GetCurrentConditions(WeatherForecast)], locationName={locationName}, Status=Failed, Message=data retrieval from Current endpoint failed {errorDetails.error.HttpStatusCode}, { errorDetails.error.apiMessage}");
@@ -141,9 +138,7 @@ namespace weatherApp.Controllers
             }
             else
             {
-                ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(await currentAstronomyResponse.Content.ReadAsStringAsync());
-
-                errorDetails.error.HttpStatusCode = ErrorMapper.MapApiErrorCode(errorDetails.error.apiCode);
+                ErrorDetails errorDetails = this.ErrorMapper.MapErrorDetails(await currentAstronomyResponse.Content.ReadAsStringAsync(), "astronomy");
 
                 this.ErrorList.Add(errorDetails);
 

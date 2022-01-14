@@ -49,3 +49,5 @@ System.Text.Json.JsonException: A possible object cycle was detected which is no
 2022-01-14 11:04:57.817 +00:00 [INF] [Operation=GetAstronomy(WeatherForecast)], locationName=london locationDT=2022-01-14, Status=Success, Message= Successfully retrieved data from Astronomy endpoint
 2022-01-14 11:07:20.295 +00:00 [WRN] [Operation=GetCurrentConditions(WeatherForecast)], locationName=london, Status=Failed, Message=data retrieval from Current endpoint failed 400, API URL is invalid.
 2022-01-14 11:07:24.873 +00:00 [INF] [Operation=GetAstronomy(WeatherForecast)], locationName=london locationDT=2022-01-14, Status=Success, Message= Successfully retrieved data from Astronomy endpoint
+2022-01-14 11:32:32.710 +00:00 [WRN] [Operation=GetCurrentConditions(WeatherForecast)], locationName=london, Status=Failed, Message=data retrieval from Current endpoint failed 400, API URL is invalid.
+2022-01-14 11:32:32.758 +00:00 [INF] [Operation=GetAstronomy(WeatherForecast)], locationName=london locationDT=2022-01-14, Status=Success, Message= Successfully retrieved data from Astronomy endpoint

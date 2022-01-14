@@ -17,6 +17,8 @@ namespace weatherApp.Models.Response
     {
         public int HttpStatusCode { get; set; }
 
+        public string Resource { get; set; }
+
         [JsonProperty("code")]
         public int apiCode { get; set; }
 

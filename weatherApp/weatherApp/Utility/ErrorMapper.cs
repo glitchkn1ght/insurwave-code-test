@@ -1,18 +1,34 @@
 ﻿//Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 12/01/2022 Ticket1 JS Team darkSaber - Refactored to map entire errordetails class.  
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Utility
 {
+    using Newtonsoft.Json;
+    using weatherApp.Models.Response;
+    
     public interface IErrorMapper
     {
-        public int MapApiErrorCode(int apiErrorCode);
+        public ErrorDetails MapErrorDetails(string payload, string resource);
     }
     
     public class StandardErrorMapper : IErrorMapper
     {
-        public int MapApiErrorCode(int apiErrorCode)
+
+        public ErrorDetails MapErrorDetails(string payload, string resource)
+        {
+            ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(payload);
+
+            errorDetails.error.HttpStatusCode = this.MapApiErrorCode(errorDetails.error.apiCode);
+            
+            errorDetails.error.Resource = resource;
+
+            return errorDetails;
+        }
+
+        private int MapApiErrorCode(int apiErrorCode)
         {
             int HttpStatusCode;
 

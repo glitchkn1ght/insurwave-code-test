@@ -1,6 +1,7 @@
 //Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 16/01/2022 Ticket1 JS Team darkSaber - Added tests on tempInCelius param
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherAppTests
@@ -176,5 +177,28 @@ namespace weatherAppTests
             Assert.AreEqual(expectedHttpCode, actual);
         }
 
+        [TestCase(true)]
+        public void WhenTempInCelciusTrue_ThenTemperatureIsReturnedInCelcius(bool tempInCelcius)
+        {
+            this.summaryMapper = new StandardSummaryMapper();
+            
+            CurrentForecast fullForecast = this.GetValidCurrentForecast();
+
+            CurrentForecastSummary forecastSummary = this.summaryMapper.mapSummaryResponse(fullForecast, tempInCelcius);
+
+            Assert.AreEqual(fullForecast.CurrentConditions.Temperature_Celcius, forecastSummary.Temperature);
+        }
+
+        [TestCase(false)]
+        public void WhenTempInCelciusTrueOrNull_ThenTemperatureIsReturnedInFahrenheit(bool tempInCelcius)
+        {
+            this.summaryMapper = new StandardSummaryMapper();
+
+            CurrentForecast fullForecast = this.GetValidCurrentForecast();
+
+            CurrentForecastSummary forecastSummary = this.summaryMapper.mapSummaryResponse(fullForecast, tempInCelcius);
+
+            Assert.AreEqual(fullForecast.CurrentConditions.Temperature_Fahrenheit, forecastSummary.Temperature);
+        }
     }
 }

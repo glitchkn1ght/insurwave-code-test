@@ -30,6 +30,5 @@ namespace weatherApp.Utility
             return forecastSummary;
         }
     }
-
 }
 

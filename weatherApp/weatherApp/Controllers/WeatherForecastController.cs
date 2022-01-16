@@ -49,10 +49,15 @@ namespace weatherApp.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
-        public async Task<IActionResult> Get(string locationName)
+        public async Task<IActionResult> Get(string locationName, bool? tempInCelius)
         {
             try
             {
+                if (!tempInCelius.HasValue) //Set to true if null to avoid breaking existing functionality
+                {
+                    tempInCelius = true;
+                }
+
                 HttpResponseMessage response = await this.WeatherService.GetCurrentConditions(locationName);
 
                 if (response.IsSuccessStatusCode)

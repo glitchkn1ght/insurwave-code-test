@@ -11,12 +11,12 @@ namespace weatherApp.Utility
 
     public interface IForecastSummaryMapper 
     {
-        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast);
+        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast, bool tempInCelcius);
     }
 
     public class StandardSummaryMapper : IForecastSummaryMapper
     {
-        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast)
+        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast, bool tempInCelcius)
         {
             CurrentForecastSummary forecastSummary = new CurrentForecastSummary
             {
@@ -24,35 +24,12 @@ namespace weatherApp.Utility
                 Region = fullForecast.WeatherLocation.Region,
                 Country = fullForecast.WeatherLocation.Country,
                 LocalTime = fullForecast.WeatherLocation.LocalTime,
-                Temperature = fullForecast.CurrentConditions.Temperature_Celcius
+                Temperature = tempInCelcius ? fullForecast.CurrentConditions.Temperature_Celcius : fullForecast.CurrentConditions.Temperature_Fahrenheit
             };
 
             return forecastSummary;
         }
     }
 
-
-    public class ConfigurableSummaryMapper : IForecastSummaryMapper
-    {
-        private readonly ConfigSettingsForecastSummary configSettings;
-
-        public ConfigurableSummaryMapper(IOptions<ConfigSettingsForecastSummary> ForecastSummarySettings)
-        {
-            this.configSettings = ForecastSummarySettings.Value;
-        }
-
-        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast)
-        {
-            CurrentForecastSummary forecastSummary = new CurrentForecastSummary
-            {
-                City = fullForecast.WeatherLocation.LocationName,
-                Region = fullForecast.WeatherLocation.Region,
-                Country = fullForecast.WeatherLocation.Country,
-                LocalTime = fullForecast.WeatherLocation.LocalTime,
-                Temperature =  this.configSettings.TemperatureInCelcius ? fullForecast.CurrentConditions.Temperature_Celcius : fullForecast.CurrentConditions.Temperature_Fahrenheit
-            };
-
-            return forecastSummary;
-        }
-    }
 }
+

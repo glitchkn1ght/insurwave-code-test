@@ -39,6 +39,8 @@ namespace weatherApp.Controllers
 
         /// <summary> A summary of the weather forecast for a given location. </summary>
         /// <response code="200">Returns a forecast summary for the location specified.</response>
+        /// <param name="locationName"> The location you want to receive the weather and astronomy data for </param>
+        /// <param name="tempInCelcius"> A boolean to detemine the temperature format.  True or null = Celcius, False = Fahrenheit</param>
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
         /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  
         /// <response code="403">If the apiKey has has exceeeded usage limit or has been disabled.</response>  

@@ -4,3 +4,6 @@
 *.dll
 *.dll
 *.pdb
+weatherApp/.vs/weatherApp/v16/TestStore/0/007.testlog
+weatherApp/.vs/weatherApp/v16/TestStore/0/testlog.manifest
+*.manifest

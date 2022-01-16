@@ -49,13 +49,13 @@ namespace weatherApp.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
-        public async Task<IActionResult> Get(string locationName, bool? tempInCelius)
+        public async Task<IActionResult> Get(string locationName, bool? tempInCelcius)
         {
             try
             {
-                if (!tempInCelius.HasValue) //Set to true if null to avoid breaking existing functionality
+                if (!tempInCelcius.HasValue) //Set to true if null to avoid breaking existing functionality
                 {
-                    tempInCelius = true;
+                    tempInCelcius = true;
                 }
 
                 HttpResponseMessage response = await this.WeatherService.GetCurrentConditions(locationName);
@@ -64,7 +64,7 @@ namespace weatherApp.Controllers
                 {
                     this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], locationName={locationName}, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.");
 
-                    CurrentForecastSummary forecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await response.Content.ReadAsStringAsync());
+                    CurrentForecastSummary forecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await response.Content.ReadAsStringAsync(), tempInCelcius.GetValueOrDefault());
 
                     return new OkObjectResult(forecastSummary);
                 }

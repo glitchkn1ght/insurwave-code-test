@@ -404,3 +404,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 *.manifest
+weatherApp/weatherApp/bin/Debug/netcoreapp3.1/weatherApp.pdb

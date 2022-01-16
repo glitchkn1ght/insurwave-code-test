@@ -1,5 +1,0 @@
-2022-01-12 21:30:30.570 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API BadRequest, No matching location found.
-2022-01-12 21:35:28.142 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 500, 
-2022-01-12 21:37:49.315 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 500, 
-2022-01-12 21:38:21.815 +00:00 [WRN] [Operation=Get(WeatherForecast)], Status=Failed, Message=non success code received from API 400, No matching location found.
-2022-01-12 21:48:56.538 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=london, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.

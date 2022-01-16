@@ -16,6 +16,8 @@ namespace weatherApp.DependancyResolution
             services.AddScoped<IWeatherService, StandardWeatherService>();
             services.AddScoped<IForecastSummaryMapper, StandardSummaryMapper>();
             services.AddScoped<IForecastMapper, StandardForecastMapper>();
+            services.AddScoped<IAstronomyMapper, StandardAstronomyMapper>();
+            services.AddScoped<IAstronomySummaryMapper, StandardAstronomySummaryMapper>();
             services.AddScoped<IErrorMapper, StandardErrorMapper>();
             return services;
         }

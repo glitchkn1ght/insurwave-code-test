@@ -3,7 +3,7 @@
 // 13/01/2022 Ticket-3 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp.Models
+namespace weatherApp.Models.Weather
 {
     using Newtonsoft.Json;
 

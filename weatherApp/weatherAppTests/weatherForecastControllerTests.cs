@@ -1,6 +1,7 @@
 //Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 16/01/2022 Ticket1 JS Team darkSaber - Updated tests with new tempInCelcius parameter
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherAppTests
@@ -185,15 +186,31 @@ namespace weatherAppTests
 
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = content });
 
-            this.forecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>())).Returns(GetValidForecastSummary());
+            this.forecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(GetValidForecastSummary());
 
             this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
-            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get("london").Result;
+            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>(), It.IsAny<bool>()).Result;
 
             Assert.AreEqual(200, actual.StatusCode);
-
         }
+
+        [Test]
+        public void WhenCalledWithNullTempInCelciusParam_ThenGetReturn200OK()
+        {
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(GetValidCurrentForecast()));
+
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = content });
+
+            this.forecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(GetValidForecastSummary());
+
+            this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
+
+            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>(), null).Result;
+
+            Assert.AreEqual(200, actual.StatusCode);
+        }
+
 
         [TestCase(1003)]
         [TestCase(1005)]
@@ -218,7 +235,7 @@ namespace weatherAppTests
 
             this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
-            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
+            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>(), It.IsAny<bool>()).Result;
 
             Assert.AreEqual(400, actual.StatusCode);
         }
@@ -244,7 +261,7 @@ namespace weatherAppTests
 
             this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
-            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
+            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>(), It.IsAny<bool>()).Result;
 
             Assert.AreEqual(401, actual.StatusCode);
         }
@@ -270,7 +287,7 @@ namespace weatherAppTests
 
             this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
-            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
+            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>(), It.IsAny<bool>()).Result;
 
             Assert.AreEqual(403, actual.StatusCode);
         }
@@ -282,7 +299,7 @@ namespace weatherAppTests
 
             this.weatherForecastController = new WeatherForecastController(this.LoggerMock.Object, this.forecastMapperMock.Object, this.weatherServiceMock.Object, this.errorMapperMock.Object);
 
-            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>()).Result;
+            ObjectResult actual = (ObjectResult)this.weatherForecastController.Get(It.IsAny<string>(), It.IsAny<bool>()).Result;
 
             Assert.AreEqual(500, actual.StatusCode);
         }

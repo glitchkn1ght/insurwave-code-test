@@ -47,6 +47,7 @@ namespace weatherApp.Controllers
         /// <summary> A summary of the weather forecast for a given location. Also provides the astronomy data for a given location and dateTime </summary>
         /// <param name="locationName"> The location you want to receive the weather and astronomy data for </param>
         /// <param name="locationDateTime"> The datetime you want for the astronomy in the format yyyy-MM-dd. Note this does not affect the weather forecast data.</param>
+        /// <param name="tempInCelcius"> A boolean to detemine the temperature format.  True or null = Celcius, False = Fahrenheit</param>
         /// <response code="200">Returns a forecast summary for the location specified.</response>
         /// <response code="207">If there are multiple failure status codes from different parts of the request, returns a list of the errors.</response>
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
@@ -60,7 +61,7 @@ namespace weatherApp.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
-        public async Task<IActionResult> Get(string locationName, bool? tempInCelcius)
+        public async Task<IActionResult> Get(string locationName, string locationDateTime , bool? tempInCelcius)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace weatherApp.Controllers
 
                 HttpResponseMessage response = await this.WeatherService.GetCurrentConditions(locationName);
 
-                bool retrivedCurrentConditionsSuccess = await GetCurrentConditions(locationName);
+                bool retrivedCurrentConditionsSuccess = await GetCurrentConditions(locationName, tempInCelcius.GetValueOrDefault());
                 bool retrievedAstronomySuccess = await this.GetAstronomy(locationName, locationDateTime);
                 
                 if (retrivedCurrentConditionsSuccess && retrievedAstronomySuccess)
@@ -105,7 +106,7 @@ namespace weatherApp.Controllers
             }
         }
 
-        private async Task<bool> GetCurrentConditions(string locationName)
+        private async Task<bool> GetCurrentConditions(string locationName, bool tempInCelcius)
         {
             HttpResponseMessage currentConditionsResponse = await this.WeatherService.GetCurrentConditions(locationName);
 
@@ -113,7 +114,7 @@ namespace weatherApp.Controllers
             {
                 this.Logger.LogInformation($"[Operation=GetCurrentConditions(WeatherForecast)], locationName={locationName}, Status=Success, Message= Successfully retrieved data from Current forecast endpoint");
 
-                this.CurrentForecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await currentConditionsResponse.Content.ReadAsStringAsync());
+                this.CurrentForecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await currentConditionsResponse.Content.ReadAsStringAsync(), tempInCelcius);
 
                 return true;
             }

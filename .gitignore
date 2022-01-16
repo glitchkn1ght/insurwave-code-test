@@ -9,6 +9,7 @@ Logs/
 
 # Object folder and files
 obj/
+bin/
 
 # User-specific files
 *.rsuser

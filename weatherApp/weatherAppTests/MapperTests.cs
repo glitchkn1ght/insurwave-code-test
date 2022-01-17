@@ -130,7 +130,6 @@ namespace weatherAppTests
             Assert.AreEqual(expectedHttpCode, actual);
         }
 
-
         [TestCase(1234, 500)]
         [TestCase(5, 500)]
         [TestCase(0, 500)]

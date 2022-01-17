@@ -79,13 +79,13 @@ namespace weatherApp.Controllers
                     tempInCelcius = true;
                 }
 
-                bool retrivedCurrentConditionsSuccess = await GetCurrentConditions(locationName, tempInCelcius.GetValueOrDefault());
+                bool retrievedCurrentConditionsSuccess = await GetCurrentConditions(locationName, tempInCelcius.GetValueOrDefault());
 
                 if (string.IsNullOrWhiteSpace(locationDT)) //Return old model if new param not supplied to breaking existing functionality
                 {
                     this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Message= Null Value Passed for locationDT retrieving weather summary only");
 
-                    if (retrivedCurrentConditionsSuccess)
+                    if (retrievedCurrentConditionsSuccess)
                     {
                         return new OkObjectResult(this.CurrentForecastSummary);
                     }
@@ -96,7 +96,7 @@ namespace weatherApp.Controllers
 
                 bool retrievedAstronomySuccess = await this.GetAstronomy(locationName, locationDT);
                 
-                if (retrivedCurrentConditionsSuccess && retrievedAstronomySuccess)
+                if (retrievedCurrentConditionsSuccess && retrievedAstronomySuccess)
                 {
                     this.CurrentConditionsAndAstronomy = new CurrentForecastAndAstronomySummary
                     {
@@ -107,7 +107,7 @@ namespace weatherApp.Controllers
                     return new OkObjectResult(this.CurrentConditionsAndAstronomy);
                 }
 
-                if(!retrivedCurrentConditionsSuccess && !retrievedAstronomySuccess)
+                if(!retrievedCurrentConditionsSuccess && !retrievedAstronomySuccess)
                 {
                     return new ObjectResult(this.ErrorList) { StatusCode = 207 };
                 }

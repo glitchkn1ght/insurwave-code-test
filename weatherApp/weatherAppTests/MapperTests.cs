@@ -7,50 +7,16 @@
 namespace weatherAppTests
 {
     using NUnit.Framework;
-    using Moq;
-    using weatherApp;
-    using weatherApp.Controllers;
-    using weatherApp.Models.Weather;
-    using weatherApp.Service;
-    using weatherApp.Models.Configuration;
-    using weatherApp.Models;
-    using Microsoft.Extensions.Logging;
-    using weatherApp.Utility;
     using System;
-    using System.Net.Http;
-    using System.Net;
-    using Newtonsoft.Json;
-    using Microsoft.AspNetCore.Mvc;
-    using weatherApp.Models.Response;
+    using weatherApp.Models.Weather;
+    using weatherApp.Utility;
 
     [TestFixture]
     public class MapperTests
     {
-
-        private Mock<ILogger<WeatherForecastController>> LoggerMock;
-
-        private Mock<IForecastMapper> forecastMapperMock;
-
-        private Mock<IWeatherService> weatherServiceMock;
-
-        private Mock<IErrorMapper> errorMapperMock; 
-
-        private WeatherForecastController weatherForecastController;
-
-        private StandardForecastMapper forecastMapper;
-
         private StandardSummaryMapper summaryMapper;
 
         private StandardErrorMapper errorMapper;
-
-        [SetUp]
-        public void Setup()
-        {
-            this.LoggerMock = new Mock<ILogger<WeatherForecastController>>();
-            this.forecastMapperMock = new Mock<IForecastMapper>();
-            this.weatherServiceMock = new Mock<IWeatherService>();
-            this.errorMapperMock = new Mock<IErrorMapper>();
-        }
 
         public CurrentForecastSummary GetValidForecastSummary() 
         {
@@ -59,7 +25,7 @@ namespace weatherAppTests
                 City = "London",
                 Region = "City of London, Greater London",
                 Country = "UK",
-                LocalTime = DateTime.Parse("2022-01-12 21:45"),
+                LocalTime = "2022-01-12 21:45",
                 Temperature = 31.1M
             };
         }
@@ -115,7 +81,7 @@ namespace weatherAppTests
                 Longitude = -0.11,
                 TimeZoneId = "Europe/London",
                 LocalTime_Epoch = 1642024750,
-                LocalTime = DateTime.Parse("2022-01-12 21:59")
+                LocalTime = "2022-01-12 21:59"
             };
         }
 

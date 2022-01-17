@@ -1,3 +1,0 @@
-Make the dt parameter optional
-Make a toggle for astro data
-when writing instructions mention .net run not working and suggest double clicking on exe

@@ -403,3 +403,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+weatherApp/.vs/weatherApp/v16/TestStore/0/testlog.manifest

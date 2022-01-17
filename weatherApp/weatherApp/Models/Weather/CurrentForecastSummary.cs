@@ -15,7 +15,7 @@ namespace weatherApp.Models.Weather
 
         public string Country { get; set; }
 
-        public DateTime LocalTime { get; set; }
+        public string LocalTime { get; set; }
 
         public decimal Temperature { get; set; }
     }

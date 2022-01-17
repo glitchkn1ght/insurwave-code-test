@@ -5,19 +5,17 @@
 
 namespace weatherApp.Controllers
 {
-    using System.Threading.Tasks;
-    using weatherApp.Models.Weather;
-    using weatherApp.Models;
-    using weatherApp.Models.Response;
-    using weatherApp.Service;
-    using weatherApp.Utility;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using System;
     using System.Net.Http;
-    using Microsoft.AspNetCore.Http;
+    using System.Threading.Tasks;
+    using weatherApp.Models.Response;
+    using weatherApp.Models.Weather;
+    using weatherApp.Service;
+    using weatherApp.Utility;
 
     [Produces("application/json")]
     [ApiController]
@@ -38,6 +36,7 @@ namespace weatherApp.Controllers
         }
 
         /// <summary> A summary of the weather forecast for a given location. </summary>
+        /// <param name="locationName"> The location you want to receive the weather data for </param>
         /// <response code="200">Returns a forecast summary for the location specified.</response>
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
         /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  

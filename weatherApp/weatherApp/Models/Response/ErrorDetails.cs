@@ -5,7 +5,6 @@
 
 namespace weatherApp.Models.Response
 {
-
     using Newtonsoft.Json;
 
     public class ErrorDetails

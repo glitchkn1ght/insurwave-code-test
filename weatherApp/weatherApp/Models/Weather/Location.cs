@@ -6,7 +6,6 @@
 namespace weatherApp.Models.Weather
 {
     using Newtonsoft.Json;
-    using System;
     
     public class Location
     {
@@ -32,6 +31,6 @@ namespace weatherApp.Models.Weather
         public int LocalTime_Epoch { get; set; }
 
         [JsonProperty("localtime")]
-        public DateTime LocalTime { get; set; }
+        public string LocalTime { get; set; }
     }
 }

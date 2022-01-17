@@ -3,6 +3,7 @@
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
 // 16/01/2022 Ticket2 JS Team darkSaber - Updated tests with new tempInCelcius parameter
 // 16/01/2022 Ticket3 JS Team darkSaber - Refactored tests to take astronomy mapper into account.
+// 16/01/2022 Ticket1 JS Team darkSaber - Updated tests with new tempInCelcius parameter
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherAppTests
@@ -28,15 +29,15 @@ namespace weatherAppTests
 
         private Mock<ILogger<WeatherForecastController>> LoggerMock;
 
-        private Mock<IForecastMapper> forecastMapperMock;
+        private Mock<IForecastMapper> ForecastMapperMock;
 
         private Mock<IAstronomyMapper> astronomyMapperMock;
 
         private Mock<IWeatherService> weatherServiceMock;
 
-        private Mock<IErrorMapper> errorMapperMock; 
+        private Mock<IErrorMapper> ErrorMapperMock; 
 
-        private WeatherForecastController weatherForecastController;
+        private WeatherForecastController WeatherForecastController;
 
         private StandardForecastMapper forecastMapper;
 

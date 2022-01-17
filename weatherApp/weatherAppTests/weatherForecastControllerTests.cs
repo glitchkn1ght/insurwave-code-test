@@ -49,7 +49,7 @@ namespace weatherAppTests
                 City = "London",
                 Region = "City of London, Greater London",
                 Country = "UK",
-                LocalTime = DateTime.Parse("2022-01-12 21:45"),
+                LocalTime = "2022-01-12 21:45",
                 Temperature = 31.1M
             };
         }
@@ -105,7 +105,7 @@ namespace weatherAppTests
                 Longitude = -0.11,
                 TimeZoneId = "Europe/London",
                 LocalTime_Epoch = 1642024750,
-                LocalTime = DateTime.Parse("2022-01-12 21:59")
+                LocalTime = "2022-01-12 21:59"
             };
         }
 

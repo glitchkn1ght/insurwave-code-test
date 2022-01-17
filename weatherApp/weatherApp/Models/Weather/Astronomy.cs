@@ -8,6 +8,6 @@ namespace weatherApp.Models.Weather
 {
     public class Astronomy
     {
-        public Astro astro { get; set; }
+        public Astro Astro { get; set; }
     }
 }

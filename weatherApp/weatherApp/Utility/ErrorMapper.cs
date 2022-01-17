@@ -21,9 +21,9 @@ namespace weatherApp.Utility
         {
             ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(payload);
 
-            errorDetails.error.HttpStatusCode = this.MapApiErrorCode(errorDetails.error.apiCode);
+            errorDetails.Error.HttpStatusCode = this.MapApiErrorCode(errorDetails.Error.ApiCode);
             
-            errorDetails.error.Resource = resource;
+            errorDetails.Error.Resource = resource;
 
             return errorDetails;
         }

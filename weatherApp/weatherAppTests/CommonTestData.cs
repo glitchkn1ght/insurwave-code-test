@@ -94,7 +94,7 @@ namespace weatherAppTests
         {
             return new Astronomy
             {
-                astro = new Astro
+                Astro = new Astro
                 {
                     SunriseTime = "08:00AM",
                     SunsetTime = "04:19PM",
@@ -110,8 +110,8 @@ namespace weatherAppTests
         {
             return new CurrentAstronomy
             {
-                location = GetValidLocation(),
-                astronomy = GetValidAstronomy()
+                Location = GetValidLocation(),
+                Astronomy = GetValidAstronomy()
             };
         }
     }

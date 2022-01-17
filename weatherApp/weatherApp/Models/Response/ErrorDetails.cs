@@ -9,7 +9,7 @@ namespace weatherApp.Models.Response
 
     public class ErrorDetails
     {
-        public Error error { get; set; }
+        public Error Error { get; set; }
     }
 
     public class Error
@@ -19,10 +19,10 @@ namespace weatherApp.Models.Response
         public string Resource { get; set; }
 
         [JsonProperty("code")]
-        public int apiCode { get; set; }
+        public int ApiCode { get; set; }
 
         [JsonProperty("message")]
-        public string apiMessage { get; set; }
+        public string ApiMessage { get; set; }
     }
 
 }

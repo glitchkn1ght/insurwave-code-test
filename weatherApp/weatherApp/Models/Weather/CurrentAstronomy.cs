@@ -7,7 +7,7 @@ namespace weatherApp.Models.Weather
 {
     public class CurrentAstronomy
     {
-        public Location location { get; set; }
-        public Astronomy astronomy { get; set; }
+        public Location Location { get; set; }
+        public Astronomy Astronomy { get; set; }
     }
 }

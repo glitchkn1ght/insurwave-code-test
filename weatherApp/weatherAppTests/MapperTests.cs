@@ -56,14 +56,22 @@ namespace weatherAppTests
             };
         }
 
+        [TestCase(1003, 400)]
+        [TestCase(1005, 400)]
+        [TestCase(1006, 400)]
+        [TestCase(9999, 400)]
+        [TestCase(1002, 401)]
+        [TestCase(2006, 401)]
+        [TestCase(2007, 403)]
+        [TestCase(2008, 403)]
         [TestCase(1234, 500)]
         [TestCase(5, 500)]
         [TestCase(0, 500)]
         public void ApiCodesMapAsExpected(int apiCode, int expectedHttpCode)
         {
-            this.errorDetails.error = new Error
+            this.errorDetails.Error = new Error
         {
-                apiCode = apiCode
+                ApiCode = apiCode
             };
 
             string content = JsonConvert.SerializeObject(this.errorDetails);
@@ -72,7 +80,7 @@ namespace weatherAppTests
 
             ErrorDetails actual = this.errorMapper.MapErrorDetails(content,"resource");
 
-            Assert.AreEqual(expectedHttpCode, actual.error.HttpStatusCode);
+            Assert.AreEqual(expectedHttpCode, actual.Error.HttpStatusCode);
         }
 
         [TestCase(true)]

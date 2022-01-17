@@ -61,7 +61,7 @@ namespace weatherApp.Controllers
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
         /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  
         /// <response code="403">If the apiKey has has exceeeded usage limit or has been disabled.</response>  
-        /// <response code="500">Interanl application error.</response>  
+        /// <response code="500">Interanl application Error.</response>  
         [HttpGet("{locationName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastAndAstronomySummary))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastSummary))]
@@ -90,7 +90,7 @@ namespace weatherApp.Controllers
                         return new OkObjectResult(this.CurrentForecastSummary);
                     }
 
-                    return new ObjectResult(this.ErrorList) { StatusCode = this.ErrorList.FirstOrDefault().error.HttpStatusCode };
+                    return new ObjectResult(this.ErrorList) { StatusCode = this.ErrorList.FirstOrDefault().Error.HttpStatusCode };
 
                 }
 
@@ -114,7 +114,7 @@ namespace weatherApp.Controllers
                     
                 else
                 {
-                    return new ObjectResult(this.ErrorList) { StatusCode = this.ErrorList.FirstOrDefault().error.HttpStatusCode };
+                    return new ObjectResult(this.ErrorList) { StatusCode = this.ErrorList.FirstOrDefault().Error.HttpStatusCode };
                 }
             }
 
@@ -144,7 +144,7 @@ namespace weatherApp.Controllers
                     
                 this.ErrorList.Add(errorDetails);
 
-                this.Logger.LogWarning($"[Operation=GetCurrentConditions(WeatherForecast)], locationName={locationName}, Status=Failed, Message=data retrieval from Current endpoint failed {errorDetails.error.HttpStatusCode}, { errorDetails.error.apiMessage}");
+                this.Logger.LogWarning($"[Operation=GetCurrentConditions(WeatherForecast)], locationName={locationName}, Status=Failed, Message=data retrieval from Current endpoint failed {errorDetails.Error.HttpStatusCode}, { errorDetails.Error.ApiMessage}");
 
                 return false;
             }
@@ -164,11 +164,11 @@ namespace weatherApp.Controllers
             }
             else
             {
-                ErrorDetails errorDetails = this.ErrorMapper.MapErrorDetails(await currentAstronomyResponse.Content.ReadAsStringAsync(), "astronomy");
+                ErrorDetails errorDetails = this.ErrorMapper.MapErrorDetails(await currentAstronomyResponse.Content.ReadAsStringAsync(), "Astronomy");
 
                 this.ErrorList.Add(errorDetails);
 
-                this.Logger.LogWarning($"[Operation=GetAstronomy(WeatherForecast)], ocationName={locationName} locationDT={locationDateTime}, Status=Failed, Message=data retrieval from Astronomy endpoint failed {errorDetails.error.HttpStatusCode}, { errorDetails.error.apiMessage}");
+                this.Logger.LogWarning($"[Operation=GetAstronomy(WeatherForecast)], ocationName={locationName} locationDT={locationDateTime}, Status=Failed, Message=data retrieval from Astronomy endpoint failed {errorDetails.Error.HttpStatusCode}, { errorDetails.Error.ApiMessage}");
 
                 return false;
             }

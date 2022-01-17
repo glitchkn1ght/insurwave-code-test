@@ -8,7 +8,7 @@ namespace weatherApp.Models.Weather
     using Newtonsoft.Json;
     public class CurrentForecast
     {
-        [JsonProperty("location")]
+        [JsonProperty("Location")]
         public Location WeatherLocation { get; set; }
 
         [JsonProperty("current")]

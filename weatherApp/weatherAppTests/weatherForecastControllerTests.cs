@@ -216,9 +216,9 @@ namespace weatherAppTests
         {
             ErrorDetails errorDetails = new ErrorDetails
             {
-                error = new Error
+                Error = new Error
                 {
-                    apiCode = 1002
+                    ApiCode = 1002
                 }
            };
             
@@ -275,17 +275,17 @@ namespace weatherAppTests
 
             ErrorDetails errorDetailsWeather = new ErrorDetails
             {
-                error = new Error
+                Error = new Error
                 {
-                    apiCode = 1002
+                    ApiCode = 1002
                 }
             };
 
             ErrorDetails errorDetailsAstronomy = new ErrorDetails
             {
-                error = new Error
+                Error = new Error
                 {
-                    apiCode = 1006
+                    ApiCode = 1006
                 }
             };
 
@@ -321,9 +321,9 @@ namespace weatherAppTests
 
             ErrorDetails errorDetailsAstronomy = new ErrorDetails
             {
-                error = new Error
+                Error = new Error
                 {
-                    apiCode = 1006
+                    ApiCode = 1006
                 }
             };
 
@@ -354,9 +354,9 @@ namespace weatherAppTests
         {
             ErrorDetails errorDetailsWeather = new ErrorDetails
             {
-                error = new Error
+                Error = new Error
                 {
-                    apiCode = 1002
+                    ApiCode = 1002
                 }
             };
 

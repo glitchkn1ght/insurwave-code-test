@@ -19,8 +19,8 @@ namespace weatherApp.Utility
         {
             CurrentAstronomySummary currentAstronomySummary = new CurrentAstronomySummary
             {
-                SunsetTime = fullAstronomy.astronomy.astro.SunsetTime,
-                SunriseTime = fullAstronomy.astronomy.astro.SunriseTime
+                SunsetTime = fullAstronomy.Astronomy.Astro.SunsetTime,
+                SunriseTime = fullAstronomy.Astronomy.Astro.SunriseTime
             };
 
             return currentAstronomySummary;

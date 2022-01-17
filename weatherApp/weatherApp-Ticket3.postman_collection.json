@@ -41,7 +41,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:44337/weatherforecast/london?locationDT=2022-01-16&tempInCelcius=true",
+					"raw": "https://localhost:44337/weatherforecast/london?tempInCelcius=false",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -53,12 +53,8 @@
 					],
 					"query": [
 						{
-							"key": "locationDT",
-							"value": "2022-01-16"
-						},
-						{
 							"key": "tempInCelcius",
-							"value": "true"
+							"value": "false"
 						}
 					]
 				}
@@ -71,7 +67,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:44337/weatherforecast/london?locationDT=2022-01-16&tempInCelcius=true",
+					"raw": "https://localhost:44337/weatherforecast/london?locationDT=2022-01-16",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -85,10 +81,6 @@
 						{
 							"key": "locationDT",
 							"value": "2022-01-16"
-						},
-						{
-							"key": "tempInCelcius",
-							"value": "true"
 						}
 					]
 				}
@@ -101,7 +93,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:44337/weatherforecast/london?locationDT=2022-01-16&tempInCelcius=true",
+					"raw": "https://localhost:44337/weatherforecast/london",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -110,16 +102,6 @@
 					"path": [
 						"weatherforecast",
 						"london"
-					],
-					"query": [
-						{
-							"key": "locationDT",
-							"value": "2022-01-16"
-						},
-						{
-							"key": "tempInCelcius",
-							"value": "true"
-						}
 					]
 				}
 			},

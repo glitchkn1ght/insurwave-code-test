@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "38b928df-5ba8-4ed7-a991-88367e60a35c",
+		"name": "weatherApp-Ticket2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ticket2Get_TempInCelciusTrue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london?tempInCelcius=true",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					],
+					"query": [
+						{
+							"key": "tempInCelcius",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket2Get_TempInCelciusNull",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket2Get_TempInCelciusFalse",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london?TempInCelcius=false",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					],
+					"query": [
+						{
+							"key": "TempInCelcius",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

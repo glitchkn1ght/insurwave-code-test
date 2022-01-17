@@ -1,2 +1,0 @@
-2022-01-16 17:45:21.781 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=london, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.
-2022-01-16 17:45:41.729 +00:00 [INF] [Operation=Get(WeatherForecast)], locationName=london, Status=Success, Message= Successfully retrieved current forecase data from API, transforming payload.

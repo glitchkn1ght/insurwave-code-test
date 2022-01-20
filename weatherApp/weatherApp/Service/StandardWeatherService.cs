@@ -15,7 +15,7 @@ namespace weatherApp.Service
     { 
         public Task<HttpResponseMessage> GetCurrentConditions(string locationName);
 
-        public Task<HttpResponseMessage> GetAstronomyConditions(string locationName, string locationDateTime);
+        public Task<HttpResponseMessage> GetAstronomyConditions(string locationName);
     }
 
     public class StandardWeatherService : IWeatherService
@@ -39,9 +39,9 @@ namespace weatherApp.Service
             return response;
         }
 
-        public async Task<HttpResponseMessage> GetAstronomyConditions(string locationName, string locationDateTime)
+        public async Task<HttpResponseMessage> GetAstronomyConditions(string locationName)
         {
-            var resource = $"{configSettings.AstronomyResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}&adt={locationDateTime}";
+            var resource = $"{configSettings.AstronomyResourceURL}.{configSettings.ContentType}?key={configSettings.APIKey}&q={locationName}";
 
             var response = await this.Client.GetAsync(resource);
 

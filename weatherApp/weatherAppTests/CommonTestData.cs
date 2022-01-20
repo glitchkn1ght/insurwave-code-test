@@ -114,5 +114,14 @@ namespace weatherAppTests
                 Astronomy = GetValidAstronomy()
             };
         }
+
+        public CurrentAstronomySummary GetValidCurrentAstronomySummary()
+        {
+            return new CurrentAstronomySummary
+            {
+                SunriseTime = this.GetValidAstronomy().Astro.SunriseTime,
+                SunsetTime = this.GetValidAstronomy().Astro.SunsetTime
+            };
+        }
     }
 }

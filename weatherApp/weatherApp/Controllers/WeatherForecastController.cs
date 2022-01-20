@@ -26,35 +26,22 @@ namespace weatherApp.Controllers
     {
         private readonly ILogger<WeatherForecastController> Logger;
         private readonly IWeatherService WeatherService;
-        private readonly IForecastMapper ForecastMapper;
-        private readonly IAstronomyMapper AstronomyMapper;
-        private readonly IErrorMapper ErrorMapper;
-
-        private CurrentAstronomySummary CurrentAstronomySummary;
-        private CurrentForecastSummary CurrentForecastSummary;
-        private CurrentForecastAndAstronomySummary CurrentConditionsAndAstronomy;
-        private List<ErrorDetails> ErrorList;
+        private List<Error> ErrorList;
 
         public WeatherForecastController
             (                           
                 ILogger<WeatherForecastController> logger, 
-                IForecastMapper forecastMapper,
-                IAstronomyMapper astronomyMapper,
-                IWeatherService weatherService,
-                IErrorMapper errorMapper
+                IWeatherService weatherService
             )
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
-            this.ForecastMapper = forecastMapper ?? throw new ArgumentNullException(nameof(forecastMapper));
-            this.AstronomyMapper = astronomyMapper ?? throw new ArgumentNullException(nameof(astronomyMapper));
             this.WeatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
-            this.ErrorMapper = errorMapper ?? throw new ArgumentNullException(nameof(errorMapper));
-            this.ErrorList = new List<ErrorDetails>();
+            this.ErrorList = new List<Error>();
         }
 
         /// <summary> A summary of the weather forecast for a given location. Also provides the astronomy data for a given location and dateTime </summary>
         /// <param name="locationName"> The location you want to receive the weather and astronomy data for </param>
-        /// <param name="locationDT"> The datetime you want for the astronomy in the format yyyy-MM-dd. Note this does not affect the weather forecast data.</param>
+        /// <param name="includeAstronomy"> Set to true to include astronomy data in response</param>
         /// <param name="tempInCelcius"> A boolean to detemine the temperature format.  True or null = Celcius, False = Fahrenheit</param>
         /// <response code="200">Returns a forecast summary of weather and astronomy data for the location specified.</response>
         /// <response code="206">Returns a forecast summary of weather for the location specified in order to be comptible with users of previous versions of this application</response>
@@ -66,11 +53,11 @@ namespace weatherApp.Controllers
         [HttpGet("{locationName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastAndAstronomySummary))]
         [ProducesResponseType(StatusCodes.Status206PartialContent, Type = typeof(CurrentForecastSummary))]
-        [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<ErrorDetails>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDetails))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDetails))]
-        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDetails))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDetails))]
+        [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<Error>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(Error))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(Error))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Error))]
         public async Task<IActionResult> Get(string locationName, bool? tempInCelcius, bool? includeAstronomy)
         {
             try
@@ -80,7 +67,7 @@ namespace weatherApp.Controllers
                     tempInCelcius = true;
                 }
 
-                bool retrievedCurrentConditionsSuccess = await GetCurrentConditions(locationName, tempInCelcius.GetValueOrDefault());
+                 ForecastResponse forecastResponse = await this.WeatherService.GetCurrentConditions(locationName, tempInCelcius.GetValueOrDefault());
 
                 if (!includeAstronomy.HasValue) //Set to true if null to avoid breaking existing functionality
                 {
@@ -91,37 +78,39 @@ namespace weatherApp.Controllers
                 {
                     this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Message= Null Value Passed for locationDT retrieving weather summary only");
 
-                    if (retrievedCurrentConditionsSuccess)
+                    if (forecastResponse.IsSuccess)
                     {
-                        return new OkObjectResult(this.CurrentForecastSummary);
+                        return new OkObjectResult(forecastResponse.forecastSummary);
                     }
 
-                    return new ObjectResult(this.ErrorList) { StatusCode = this.ErrorList.FirstOrDefault().Error.HttpStatusCode };
-
+                    return new ObjectResult(forecastResponse.Error) { StatusCode = forecastResponse.Error.ErrorDetails.HttpStatusCode };
                 }
 
-                bool retrievedAstronomySuccess = await this.GetAstronomy(locationName);
-                
-                if (retrievedCurrentConditionsSuccess && retrievedAstronomySuccess)
+                AstronomyResponse astronomyResponse = await this.WeatherService.GetAstronomyConditions(locationName);
+
+                if (forecastResponse.IsSuccess && astronomyResponse.IsSuccess)
                 {
-                    this.CurrentConditionsAndAstronomy = new CurrentForecastAndAstronomySummary
+                    CurrentForecastAndAstronomySummary summary = new CurrentForecastAndAstronomySummary
                     {
-                        CurrentForecastSummary = this.CurrentForecastSummary,
-                        CurrentAstronomySummary = this.CurrentAstronomySummary
+                        CurrentForecastSummary = forecastResponse.forecastSummary,
+                        CurrentAstronomySummary = astronomyResponse.astronomySummary
                     };
 
-                    return new OkObjectResult(this.CurrentConditionsAndAstronomy);
+                    return new OkObjectResult(summary);
                 }
 
-                if(!retrievedCurrentConditionsSuccess && !retrievedAstronomySuccess)
+                if (!forecastResponse.IsSuccess)
                 {
-                    return new ObjectResult(this.ErrorList) { StatusCode = 207 };
+                    this.ErrorList.Add(forecastResponse.Error);
                 }
-                    
-                else
+
+                if (!astronomyResponse.IsSuccess)
                 {
-                    return new ObjectResult(this.ErrorList) { StatusCode = this.ErrorList.FirstOrDefault().Error.HttpStatusCode };
+                    this.ErrorList.Add(astronomyResponse.Error);
                 }
+
+                return new ObjectResult(this.ErrorList) { StatusCode = 207 };
+
             }
 
             catch (Exception ex)
@@ -130,54 +119,9 @@ namespace weatherApp.Controllers
 
                 return new ObjectResult(ex) {StatusCode = 500 };
             }
-        }
+        }   
 
-        private async Task<bool> GetCurrentConditions(string locationName, bool tempInCelcius)
-        {
-            HttpResponseMessage currentConditionsResponse = await this.WeatherService.GetCurrentConditions(locationName);
 
-            if (currentConditionsResponse.IsSuccessStatusCode)
-            {
-                this.Logger.LogInformation($"[Operation=GetCurrentConditions(WeatherForecast)], locationName={locationName}, Status=Success, Message= Successfully retrieved data from Current forecast endpoint");
 
-                this.CurrentForecastSummary = this.ForecastMapper.mapWeatherAPIResponse(await currentConditionsResponse.Content.ReadAsStringAsync(), tempInCelcius);
-
-                return true;
-            }
-            else
-            {
-                ErrorDetails errorDetails = this.ErrorMapper.MapErrorDetails(await currentConditionsResponse.Content.ReadAsStringAsync(),"current");
-                    
-                this.ErrorList.Add(errorDetails);
-
-                this.Logger.LogWarning($"[Operation=GetCurrentConditions(WeatherForecast)], locationName={locationName}, Status=Failed, Message=data retrieval from Current endpoint failed {errorDetails.Error.HttpStatusCode}, { errorDetails.Error.ApiMessage}");
-
-                return false;
-            }
-        }
-
-        private async Task<bool> GetAstronomy(string locationName)
-        {
-            HttpResponseMessage currentAstronomyResponse = await this.WeatherService.GetAstronomyConditions(locationName);
-
-            if (currentAstronomyResponse.IsSuccessStatusCode)
-            {
-                this.Logger.LogInformation($"[Operation=GetAstronomy(WeatherForecast)], locationName={locationName}, Status=Success, Message= Successfully retrieved data from Astronomy endpoint");
-
-                this.CurrentAstronomySummary =  this.AstronomyMapper.mapAstronomyAPIResponse(await currentAstronomyResponse.Content.ReadAsStringAsync());
-
-                return true;
-            }
-            else
-            {
-                ErrorDetails errorDetails = this.ErrorMapper.MapErrorDetails(await currentAstronomyResponse.Content.ReadAsStringAsync(), "Astronomy");
-
-                this.ErrorList.Add(errorDetails);
-
-                this.Logger.LogWarning($"[Operation=GetAstronomy(WeatherForecast)], ocationName={locationName}, Status=Failed, Message=data retrieval from Astronomy endpoint failed {errorDetails.Error.HttpStatusCode}, { errorDetails.Error.ApiMessage}");
-
-                return false;
-            }
-        }
     }
 }

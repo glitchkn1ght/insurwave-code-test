@@ -37,12 +37,11 @@ namespace weatherAppTests
 
         private Mock<IErrorMapper> ErrorMapperMock; 
 
-        private WeatherForecastController WeatherForecastController;
-
         private StandardErrorMapper ErrorMapper;
 
         private CommonTestData CommonTestData;
 
+        private WeatherForecastController WeatherForecastController;
 
         [SetUp]
         public void Setup()
@@ -66,44 +65,7 @@ namespace weatherAppTests
                     this.WeatherForecastController = new WeatherForecastController
                     (
                         null, 
-                        this.ForecastMapperMock.Object, 
-                        this.astronomyMapperMock.Object, 
-                        this.weatherServiceMock.Object, 
-                        this.ErrorMapperMock.Object
-                    );
-                });
-        }
-
-        [Test]
-        public void WhenConstructorCalledWithNullForecastMapper_ThenArgNullExceptionThrown()
-        {
-            Assert.Throws(
-                Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("forecastMapper"), delegate
-                {
-                    this.WeatherForecastController = new WeatherForecastController
-                    (
-                        this.LoggerMock.Object,
-                        null,
-                        this.astronomyMapperMock.Object,
-                        this.weatherServiceMock.Object,
-                        this.ErrorMapperMock.Object
-                    ) ;
-                });
-        }
-
-        [Test]
-        public void WhenConstructorCalledWithNullAstronomyMapper_ThenArgNullExceptionThrown()
-        {
-            Assert.Throws(
-                Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("astronomyMapper"), delegate
-                {
-                    this.WeatherForecastController = new WeatherForecastController
-                    (
-                        this.LoggerMock.Object,
-                        this.ForecastMapperMock.Object,
-                        null,
-                        this.weatherServiceMock.Object,
-                        this.ErrorMapperMock.Object
+                        this.weatherServiceMock.Object
                     );
                 });
         }
@@ -117,26 +79,6 @@ namespace weatherAppTests
                     this.WeatherForecastController = new WeatherForecastController
                     (
                         this.LoggerMock.Object,
-                        this.ForecastMapperMock.Object,
-                        this.astronomyMapperMock.Object,
-                        null,
-                        this.ErrorMapperMock.Object
-                    );
-                });
-        }
-
-        [Test]
-        public void WhenConstructorCalledWithNullErrorMapper_ThenArgNullExceptionThrown()
-        {
-            Assert.Throws(
-                Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("errorMapper"), delegate
-                {
-                    this.WeatherForecastController = new WeatherForecastController
-                    (
-                        this.LoggerMock.Object, 
-                        this.ForecastMapperMock.Object,
-                        this.astronomyMapperMock.Object,
-                        this.weatherServiceMock.Object, 
                         null
                     );
                 });
@@ -151,10 +93,7 @@ namespace weatherAppTests
                     this.WeatherForecastController = new WeatherForecastController
                     (
                         this.LoggerMock.Object,
-                        this.ForecastMapperMock.Object,
-                        this.astronomyMapperMock.Object,
-                        this.weatherServiceMock.Object,
-                        this.ErrorMapperMock.Object
+                        this.weatherServiceMock.Object
                     );
                 });
         }
@@ -162,23 +101,14 @@ namespace weatherAppTests
         [Test]
         public void WhenNullTempInCelciusParam_ThenGetReturn200OK_WithFullSummary()
         {
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentForecast()));
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync(new ForecastResponse{ IsSuccess = true, forecastSummary = this.CommonTestData.GetValidForecastSummary()});
 
-            HttpContent astronomyContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentAstronomy()));
-
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = weatherContent });
-
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = astronomyContent });
-
-            this.ForecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(this.CommonTestData.GetValidForecastSummary());
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, astronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary()});
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapperMock.Object
+                this.weatherServiceMock.Object
               );
 
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london",null ,true).Result;
@@ -190,19 +120,12 @@ namespace weatherAppTests
         [Test]
         public void WhenNullAstronomyParamAndWeatherServiceOk_ThenGetReturnsForecastSummaryDataOnly()
         {
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentForecast()));
-
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = weatherContent });
-
-            this.ForecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(this.CommonTestData.GetValidForecastSummary());
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync( new ForecastResponse { IsSuccess = true, forecastSummary = this.CommonTestData.GetValidForecastSummary() } );
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapperMock.Object
+                this.weatherServiceMock.Object
               );
 
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, null).Result;
@@ -212,27 +135,22 @@ namespace weatherAppTests
         }
 
         [Test]
-        public void WhenNullLocationDTParamAndWeatherServiceNotOk_ThenGetReturnsError()
+        public void WhenNullAstronomyParamAndWeatherServiceNotOk_ThenGetReturnsError()
         {
-            ErrorDetails errorDetails = new ErrorDetails
+            Error error = new Error
             {
-                Error = new Error
+                ErrorDetails = new ErrorDetails
                 {
-                    ApiCode = 1002
+                    HttpStatusCode = 401
                 }
            };
             
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(errorDetails));
-
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized, Content = weatherContent });
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>(), true)).ReturnsAsync(new ForecastResponse { Error = error });
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapper
+                this.weatherServiceMock.Object
               );
 
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get(It.IsAny<string>(), null, null).Result;
@@ -243,24 +161,14 @@ namespace weatherAppTests
         [Test]
         public void WhenBothRequestsReturnOK_ThenGetReturns200OK_WithFullSummary()
         {
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync(new ForecastResponse { IsSuccess = true, forecastSummary = this.CommonTestData.GetValidForecastSummary() });
 
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentForecast()));
-
-            HttpContent astronomyContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentAstronomy()));
-
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = weatherContent });
-
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = astronomyContent });
-
-            this.ForecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), true)).Returns(this.CommonTestData.GetValidForecastSummary());
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, astronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary() });
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapperMock.Object
+                this.weatherServiceMock.Object
               );
 
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, true).Result;
@@ -273,132 +181,105 @@ namespace weatherAppTests
         public void WhenBothRequestsReturnWithErrorCodes_ThenGetReturns207MultiStatus()
         {
 
-            ErrorDetails errorDetailsWeather = new ErrorDetails
+            Error weatherError = new Error
             {
-                Error = new Error
+                ErrorDetails = new ErrorDetails
                 {
-                    ApiCode = 1002
+                    HttpStatusCode = 401
                 }
             };
 
-            ErrorDetails errorDetailsAstronomy = new ErrorDetails
+            Error astronomyError = new Error
             {
-                Error = new Error
+                ErrorDetails = new ErrorDetails
                 {
-                    ApiCode = 1006
+                   HttpStatusCode = 401
                 }
             };
 
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(errorDetailsWeather));
 
-            HttpContent astronomyContent = new StringContent(JsonConvert.SerializeObject(errorDetailsAstronomy));
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync(new ForecastResponse { IsSuccess = false, Error = weatherError });
 
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized, Content = weatherContent });
-
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = astronomyContent });
-
-            this.ForecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(this.CommonTestData.GetValidForecastSummary());
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = false, Error = astronomyError });
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapper
+                this.weatherServiceMock.Object
               );
 
-            ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", It.IsAny<bool>(), true).Result;
+            ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, true).Result;
 
             Assert.AreEqual(207, actual.StatusCode);
 
         }
 
         [Test]
-        public void WhenWeatherRequestSuccess_AndAstronomyRequestNonSuccess_ThenGetReturnsError()
+        public void WhenWeatherRequestSuccess_AndAstronomyRequestNonSuccess_ThenGetReturns207MultiStatus()
         {
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentForecast()));
-
-            ErrorDetails errorDetailsAstronomy = new ErrorDetails
+           
+            Error astronomyError = new Error
             {
-                Error = new Error
+                ErrorDetails = new ErrorDetails
                 {
-                    ApiCode = 1006
+                    HttpStatusCode = 401
                 }
             };
 
-            HttpContent astronomyContent = new StringContent(JsonConvert.SerializeObject(errorDetailsAstronomy));
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync(new ForecastResponse { IsSuccess = true, forecastSummary = this.CommonTestData.GetValidForecastSummary() });
 
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = weatherContent });
-
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = astronomyContent });
-
-            this.ForecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(this.CommonTestData.GetValidForecastSummary());
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = false, Error = astronomyError });
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapper
+                this.weatherServiceMock.Object
               );
 
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, true).Result;
 
-            Assert.AreEqual(400, actual.StatusCode);
+            Assert.AreEqual(207, actual.StatusCode);
         }
 
         [Test]
-        public void WhenWeatherRequestNonSuccess_AndAstronomyRequestSucceess_ThenGetReturnsError()
-        {
-            ErrorDetails errorDetailsWeather = new ErrorDetails
+        public void WhenWeatherRequestNonSuccess_AndAstronomyRequestSucceess_ThenGetReturns207MultiStatus()
+        { 
+            
+            Error weatherError = new Error
             {
-                Error = new Error
+                ErrorDetails = new ErrorDetails
                 {
-                    ApiCode = 1002
+                    HttpStatusCode = 401
                 }
             };
 
-            HttpContent weatherContent = new StringContent(JsonConvert.SerializeObject(errorDetailsWeather));
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london",true)).ReturnsAsync(new ForecastResponse { IsSuccess = false, Error = weatherError });
 
-            HttpContent astronomyContent = new StringContent(JsonConvert.SerializeObject(this.CommonTestData.GetValidCurrentAstronomy()));
-
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized, Content = weatherContent });
-
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = astronomyContent });
-
-            this.ForecastMapperMock.Setup(x => x.mapWeatherAPIResponse(It.IsAny<string>(), It.IsAny<bool>())).Returns(this.CommonTestData.GetValidForecastSummary());
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, astronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary() });
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapper
+                this.weatherServiceMock.Object
               );
 
-            ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", It.IsAny<bool>(), It.IsAny<bool>()).Result;
+            ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, true).Result;
 
-            Assert.AreEqual(401, actual.StatusCode);
+            Assert.AreEqual(207, actual.StatusCode);
         }
 
         [Test]
         public void WhenExceptiontThrown_ThenGetReturn500InternalServerError()
         {
-            this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>())).Throws(new Exception());
+            this.weatherServiceMock.Setup(x => x.GetCurrentConditions(It.IsAny<string>(),true)).Throws(new Exception());
 
             this.WeatherForecastController = new WeatherForecastController
               (
                 this.LoggerMock.Object,
-                this.ForecastMapperMock.Object,
-                this.astronomyMapperMock.Object,
-                this.weatherServiceMock.Object,
-                this.ErrorMapper
+                this.weatherServiceMock.Object
               );
 
-            ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", It.IsAny<bool>(), It.IsAny<bool>()).Result;
+            ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, true).Result;
 
             Assert.AreEqual(500, actual.StatusCode);
         }

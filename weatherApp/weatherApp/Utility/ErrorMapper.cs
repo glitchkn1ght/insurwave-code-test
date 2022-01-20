@@ -7,25 +7,27 @@
 namespace weatherApp.Utility
 {
     using Newtonsoft.Json;
+    using System.Threading.Tasks;
     using weatherApp.Models.Response;
+    using System.Net.Http;
     
     public interface IErrorMapper
     {
-        public ErrorDetails MapErrorDetails(string payload, string resource);
+        public Task<Error> MapError(HttpResponseMessage payload, string resource);
     }
     
     public class StandardErrorMapper : IErrorMapper
     {
 
-        public ErrorDetails MapErrorDetails(string payload, string resource)
+        public async Task<Error> MapError(HttpResponseMessage payload, string resource)
         {
-            ErrorDetails errorDetails = JsonConvert.DeserializeObject<ErrorDetails>(payload);
+            Error error = JsonConvert.DeserializeObject<Error>(await payload.Content.ReadAsStringAsync());
 
-            errorDetails.Error.HttpStatusCode = this.MapApiErrorCode(errorDetails.Error.ApiCode);
+            error.ErrorDetails.HttpStatusCode = this.MapApiErrorCode(error.ErrorDetails.ApiCode);
             
-            errorDetails.Error.Resource = resource;
+            error.ErrorDetails.Resource = resource;
 
-            return errorDetails;
+            return error;
         }
 
         private int MapApiErrorCode(int apiErrorCode)

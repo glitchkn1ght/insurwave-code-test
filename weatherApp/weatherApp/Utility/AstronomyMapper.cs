@@ -8,10 +8,12 @@ namespace weatherApp.Utility
     using Newtonsoft.Json;
     using System;
     using weatherApp.Models.Weather;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
     public interface IAstronomyMapper
     {
-        CurrentAstronomySummary mapAstronomyAPIResponse(string payload);
+        Task<CurrentAstronomySummary> mapAstronomyAPIResponse(HttpResponseMessage payload);
     }
 
     public class StandardAstronomyMapper : IAstronomyMapper
@@ -23,9 +25,9 @@ namespace weatherApp.Utility
             this.AstronomySummaryMapper = astronomySummaryMapper ?? throw new ArgumentNullException(nameof(astronomySummaryMapper));
         }
 
-        public CurrentAstronomySummary mapAstronomyAPIResponse(string payload)
+        public async Task<CurrentAstronomySummary> mapAstronomyAPIResponse(HttpResponseMessage payload)
         {
-            CurrentAstronomy fullAstronomy = JsonConvert.DeserializeObject<CurrentAstronomy>(payload);
+            CurrentAstronomy fullAstronomy = JsonConvert.DeserializeObject<CurrentAstronomy>(await payload.Content.ReadAsStringAsync());
 
             CurrentAstronomySummary astronomySummary = this.AstronomySummaryMapper.mapAstronomyAPIResponse(fullAstronomy);
 

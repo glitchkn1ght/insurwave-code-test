@@ -11,6 +11,8 @@ namespace weatherAppTests
     using weatherApp.Models.Response;
     using weatherApp.Models.Weather;
     using weatherApp.Utility;
+    using System.Net;
+    using System.Net.Http;
 
     [TestFixture]
     public class MapperTests
@@ -19,14 +21,14 @@ namespace weatherAppTests
 
         private StandardErrorMapper errorMapper;
 
-        private ErrorDetails errorDetails;
+        private Error error;
 
         private CommonTestData commonTestData;
           
         [SetUp]
         public void Setup()
         {
-            this.errorDetails = new ErrorDetails();
+            this.error = new Error();
             this.commonTestData = new CommonTestData();
             this.summaryMapper = new StandardSummaryMapper();
         }
@@ -69,18 +71,21 @@ namespace weatherAppTests
         [TestCase(0, 500)]
         public void ApiCodesMapAsExpected(int apiCode, int expectedHttpCode)
         {
-            this.errorDetails.Error = new Error
-        {
+            
+            this.error.ErrorDetails = new ErrorDetails
+            {
                 ApiCode = apiCode
             };
 
-            string content = JsonConvert.SerializeObject(this.errorDetails);
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(this.error));
 
             this.errorMapper = new StandardErrorMapper();
 
-            ErrorDetails actual = this.errorMapper.MapErrorDetails(content,"resource");
+            HttpResponseMessage msg = new HttpResponseMessage { Content = content };
 
-            Assert.AreEqual(expectedHttpCode, actual.Error.HttpStatusCode);
+            Error actual =  this.errorMapper.MapError(msg,"resource").Result;
+
+            Assert.AreEqual(expectedHttpCode, actual.ErrorDetails.HttpStatusCode);
         }
 
         [TestCase(true)]

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using weatherApp.Models.Weather;
-using weatherApp.Models.Response;
+﻿//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 20/01/2022 Ticket3 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Models.Response
 {
+    using weatherApp.Models.Weather;
+
     public class AstronomyResponse : BaseResponse
     {
-        public CurrentAstronomySummary astronomySummary { get; set; }
+        public CurrentAstronomySummary AstronomySummary { get; set; }
     }
 }

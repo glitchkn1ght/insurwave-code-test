@@ -19,16 +19,16 @@ namespace weatherApp.BusinessLogic
         Task<AstronomyResponse> InterpretAPIAstronomyResponse(HttpResponseMessage astronomyConditionsAPIResponse);
     }
 
-    public class WeatherOrchestrator : IWeatherOrchestrator
+    public class StandardWeatherOrchestrator : IWeatherOrchestrator
     {
-        private readonly ILogger<WeatherOrchestrator> Logger;
+        private readonly ILogger<StandardWeatherOrchestrator> Logger;
         private readonly IForecastMapper ForecastMapper;
         private readonly IAstronomyMapper AstronomyMapper;
         private readonly IErrorMapper ErrorMapper;
 
-        public WeatherOrchestrator 
+        public StandardWeatherOrchestrator 
             (                           
-                ILogger<WeatherOrchestrator> logger, 
+                ILogger<StandardWeatherOrchestrator> logger, 
                 IForecastMapper forecastMapper,
                 IAstronomyMapper astronomyMapper,
                 IErrorMapper errorMapper
@@ -74,7 +74,7 @@ namespace weatherApp.BusinessLogic
 
                 this.Logger.LogInformation($"[Operation=InterpretAPIAstronomyResponse], Status=Success, Message= Success code received from Astronmy forecast endpoint, mapping data.");
 
-                astronomyResponse.astronomySummary = await this.AstronomyMapper.mapAstronomyAPIResponse(astronomyConditionsAPIResponse);
+                astronomyResponse.AstronomySummary = await this.AstronomyMapper.mapAstronomyAPIResponse(astronomyConditionsAPIResponse);
             }
             else
             {

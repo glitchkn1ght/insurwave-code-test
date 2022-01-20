@@ -11,17 +11,12 @@ namespace weatherAppTests
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Moq;
-    using Newtonsoft.Json;
     using NUnit.Framework;
     using System;
-    using System.Collections;
-    using System.Net;
-    using System.Net.Http;
     using weatherApp.Controllers;
     using weatherApp.Models.Response;
     using weatherApp.Models.Weather;
     using weatherApp.Service;
-    using weatherApp.Utility;
 
     [TestFixture]
     public class WeatherForecastControllerTests
@@ -29,15 +24,7 @@ namespace weatherAppTests
 
         private Mock<ILogger<WeatherForecastController>> LoggerMock;
 
-        private Mock<IForecastMapper> ForecastMapperMock;
-
-        private Mock<IAstronomyMapper> astronomyMapperMock;
-
         private Mock<IWeatherService> weatherServiceMock;
-
-        private Mock<IErrorMapper> ErrorMapperMock; 
-
-        private StandardErrorMapper ErrorMapper;
 
         private CommonTestData CommonTestData;
 
@@ -47,13 +34,8 @@ namespace weatherAppTests
         public void Setup()
         {
             this.LoggerMock = new Mock<ILogger<WeatherForecastController>>();
-            this.ForecastMapperMock = new Mock<IForecastMapper>();
-            this.astronomyMapperMock = new Mock<IAstronomyMapper>();
             this.weatherServiceMock = new Mock<IWeatherService>();
-            this.ErrorMapperMock = new Mock<IErrorMapper>();
             this.CommonTestData = new CommonTestData();
-
-            this.ErrorMapper = new StandardErrorMapper();
         }
 
         [Test]
@@ -103,7 +85,7 @@ namespace weatherAppTests
         {
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync(new ForecastResponse{ IsSuccess = true, forecastSummary = this.CommonTestData.GetValidForecastSummary()});
 
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, astronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary()});
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, AstronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary()});
 
             this.WeatherForecastController = new WeatherForecastController
               (
@@ -163,7 +145,7 @@ namespace weatherAppTests
         {
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london", true)).ReturnsAsync(new ForecastResponse { IsSuccess = true, forecastSummary = this.CommonTestData.GetValidForecastSummary() });
 
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, astronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary() });
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, AstronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary() });
 
             this.WeatherForecastController = new WeatherForecastController
               (
@@ -255,7 +237,7 @@ namespace weatherAppTests
 
             this.weatherServiceMock.Setup(x => x.GetCurrentConditions("london",true)).ReturnsAsync(new ForecastResponse { IsSuccess = false, Error = weatherError });
 
-            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, astronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary() });
+            this.weatherServiceMock.Setup(x => x.GetAstronomyConditions("london")).ReturnsAsync(new AstronomyResponse { IsSuccess = true, AstronomySummary = this.CommonTestData.GetValidCurrentAstronomySummary() });
 
             this.WeatherForecastController = new WeatherForecastController
               (

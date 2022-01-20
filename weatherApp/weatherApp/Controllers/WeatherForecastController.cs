@@ -8,16 +8,12 @@ namespace weatherApp.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using weatherApp.Models.Response;
     using weatherApp.Models.Weather;
     using weatherApp.Service;
-    using weatherApp.Utility;
 
     [Produces("application/json")]
     [ApiController]
@@ -76,7 +72,7 @@ namespace weatherApp.Controllers
 
                 if (!includeAstronomy.Value) //Return old model if new param not supplied to breaking existing functionality
                 {
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Message= Null Value Passed for locationDT retrieving weather summary only");
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Success, Message= Null Value Passed for includeAstronomy retrieving weather summary only");
 
                     if (forecastResponse.IsSuccess)
                     {
@@ -93,8 +89,10 @@ namespace weatherApp.Controllers
                     CurrentForecastAndAstronomySummary summary = new CurrentForecastAndAstronomySummary
                     {
                         CurrentForecastSummary = forecastResponse.forecastSummary,
-                        CurrentAstronomySummary = astronomyResponse.astronomySummary
+                        CurrentAstronomySummary = astronomyResponse.AstronomySummary
                     };
+
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Success, Message= Succesfully retrieved weather and astronomy data from weatherService");
 
                     return new OkObjectResult(summary);
                 }
@@ -102,11 +100,15 @@ namespace weatherApp.Controllers
                 if (!forecastResponse.IsSuccess)
                 {
                     this.ErrorList.Add(forecastResponse.Error);
+
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= Error retrieving weather data from weatherService");
                 }
 
                 if (!astronomyResponse.IsSuccess)
                 {
                     this.ErrorList.Add(astronomyResponse.Error);
+
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= Error retrieving astronomy data from weatherService");
                 }
 
                 return new ObjectResult(this.ErrorList) { StatusCode = 207 };
@@ -120,8 +122,5 @@ namespace weatherApp.Controllers
                 return new ObjectResult(ex) {StatusCode = 500 };
             }
         }   
-
-
-
     }
 }

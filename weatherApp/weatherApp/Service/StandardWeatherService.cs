@@ -28,7 +28,7 @@ namespace weatherApp.Service
         private readonly IForecastMapper ForecastMapper;
         private readonly IWeatherOrchestrator WeatherOrchestrator;
 
-        public StandardWeatherService(HttpClient httpClient, IOptions<ConfigSettingsWeatherAPI> configWeatherSettings, WeatherOrchestrator weatherOrchestrator)
+        public StandardWeatherService(HttpClient httpClient, IOptions<ConfigSettingsWeatherAPI> configWeatherSettings, IWeatherOrchestrator weatherOrchestrator)
         {
             this.Client = httpClient;
             this.configSettings = configWeatherSettings.Value;

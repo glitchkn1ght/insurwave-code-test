@@ -21,14 +21,14 @@ namespace weatherAppTests
 
         private StandardErrorMapper errorMapper;
 
-        private Error error;
+        private ErrorResponse error;
 
         private CommonTestData commonTestData;
           
         [SetUp]
         public void Setup()
         {
-            this.error = new Error();
+            this.error = new ErrorResponse();
             this.commonTestData = new CommonTestData();
             this.summaryMapper = new StandardSummaryMapper();
         }
@@ -72,7 +72,7 @@ namespace weatherAppTests
         public void ApiCodesMapAsExpected(int apiCode, int expectedHttpCode)
         {
             
-            this.error.ErrorDetails = new ErrorDetails
+            this.error.Error = new Error
             {
                 ApiCode = apiCode
             };
@@ -83,9 +83,9 @@ namespace weatherAppTests
 
             HttpResponseMessage msg = new HttpResponseMessage { Content = content };
 
-            Error actual =  this.errorMapper.MapError(msg,"resource").Result;
+            ErrorResponse actual =  this.errorMapper.MapError(msg,"resource").Result;
 
-            Assert.AreEqual(expectedHttpCode, actual.ErrorDetails.HttpStatusCode);
+            Assert.AreEqual(expectedHttpCode, actual.Error.HttpStatusCode);
         }
 
         [TestCase(true)]

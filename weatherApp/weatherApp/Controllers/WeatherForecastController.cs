@@ -22,7 +22,7 @@ namespace weatherApp.Controllers
     {
         private readonly ILogger<WeatherForecastController> Logger;
         private readonly IWeatherService WeatherService;
-        private List<Error> ErrorList;
+        private List<ErrorResponse> ErrorList;
 
         public WeatherForecastController
             (                           
@@ -32,7 +32,7 @@ namespace weatherApp.Controllers
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
             this.WeatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
-            this.ErrorList = new List<Error>();
+            this.ErrorList = new List<ErrorResponse>();
         }
 
         /// <summary> A summary of the weather forecast for a given location. Also provides the astronomy data for a given location and dateTime </summary>
@@ -45,15 +45,15 @@ namespace weatherApp.Controllers
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
         /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  
         /// <response code="403">If the apiKey has has exceeeded usage limit or has been disabled.</response>  
-        /// <response code="500">Interanl application Error.</response>  
+        /// <response code="500">Interanl application ErrorResponse.</response>  
         [HttpGet("{locationName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastAndAstronomySummary))]
         [ProducesResponseType(StatusCodes.Status206PartialContent, Type = typeof(CurrentForecastSummary))]
-        [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<Error>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Error))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(Error))]
-        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(Error))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Error))]
+        [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<ErrorResponse>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse))]
         public async Task<IActionResult> Get(string locationName, bool? tempInCelcius, bool? includeAstronomy)
         {
             try
@@ -79,7 +79,7 @@ namespace weatherApp.Controllers
                         return new OkObjectResult(forecastResponse.forecastSummary);
                     }
 
-                    return new ObjectResult(forecastResponse.Error) { StatusCode = forecastResponse.Error.ErrorDetails.HttpStatusCode };
+                    return new ObjectResult(forecastResponse.Error) { StatusCode = forecastResponse.Error.Error.HttpStatusCode };
                 }
 
                 AstronomyResponse astronomyResponse = await this.WeatherService.GetAstronomyConditions(locationName);
@@ -101,14 +101,14 @@ namespace weatherApp.Controllers
                 {
                     this.ErrorList.Add(forecastResponse.Error);
 
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= Error retrieving weather data from weatherService");
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= ErrorResponse retrieving weather data from weatherService");
                 }
 
                 if (!astronomyResponse.IsSuccess)
                 {
                     this.ErrorList.Add(astronomyResponse.Error);
 
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= Error retrieving astronomy data from weatherService");
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= ErrorResponse retrieving astronomy data from weatherService");
                 }
 
                 return new ObjectResult(this.ErrorList) { StatusCode = 207 };

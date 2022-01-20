@@ -58,7 +58,7 @@ namespace weatherApp.BusinessLogic
                 
                 forecastResponse.Error = await this.ErrorMapper.MapError(currentConditionsResponse, "current");
 
-                this.Logger.LogWarning($"[Operation=InterpretAPIForecastResponse], Status=Failed, Message=Non success code received from Current forecast endpoint, details: { forecastResponse.Error.ErrorDetails.HttpStatusCode}, {forecastResponse.Error.ErrorDetails.ApiMessage}");
+                this.Logger.LogWarning($"[Operation=InterpretAPIForecastResponse], Status=Failed, Message=Non success code received from Current forecast endpoint, details: { forecastResponse.Error.Error.HttpStatusCode}, {forecastResponse.Error.Error.ApiMessage}");
             }
 
             return forecastResponse;
@@ -80,7 +80,7 @@ namespace weatherApp.BusinessLogic
             {
                 astronomyResponse.Error = await this.ErrorMapper.MapError(astronomyConditionsAPIResponse, "current");
 
-                this.Logger.LogWarning($"[Operation=InterpretAPIAstronomyResponse], Status=Failed, Message=Non success code received from Astronmy forecast endpoint, details: { astronomyResponse.Error.ErrorDetails.HttpStatusCode}, {astronomyResponse.Error.ErrorDetails.ApiMessage}");
+                this.Logger.LogWarning($"[Operation=InterpretAPIAstronomyResponse], Status=Failed, Message=Non success code received from Astronmy forecast endpoint, details: { astronomyResponse.Error.Error.HttpStatusCode}, {astronomyResponse.Error.Error.ApiMessage}");
             }
 
             return astronomyResponse;

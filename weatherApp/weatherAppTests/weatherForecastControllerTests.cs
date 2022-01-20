@@ -119,9 +119,9 @@ namespace weatherAppTests
         [Test]
         public void WhenNullAstronomyParamAndWeatherServiceNotOk_ThenGetReturnsError()
         {
-            Error error = new Error
+            ErrorResponse error = new ErrorResponse
             {
-                ErrorDetails = new ErrorDetails
+                Error = new Error
                 {
                     HttpStatusCode = 401
                 }
@@ -163,17 +163,17 @@ namespace weatherAppTests
         public void WhenBothRequestsReturnWithErrorCodes_ThenGetReturns207MultiStatus()
         {
 
-            Error weatherError = new Error
+            ErrorResponse weatherError = new ErrorResponse
             {
-                ErrorDetails = new ErrorDetails
+                Error = new Error
                 {
                     HttpStatusCode = 401
                 }
             };
 
-            Error astronomyError = new Error
+            ErrorResponse astronomyError = new ErrorResponse
             {
-                ErrorDetails = new ErrorDetails
+                Error = new Error
                 {
                    HttpStatusCode = 401
                 }
@@ -200,9 +200,9 @@ namespace weatherAppTests
         public void WhenWeatherRequestSuccess_AndAstronomyRequestNonSuccess_ThenGetReturns207MultiStatus()
         {
            
-            Error astronomyError = new Error
+            ErrorResponse astronomyError = new ErrorResponse
             {
-                ErrorDetails = new ErrorDetails
+                Error = new Error
                 {
                     HttpStatusCode = 401
                 }
@@ -227,9 +227,9 @@ namespace weatherAppTests
         public void WhenWeatherRequestNonSuccess_AndAstronomyRequestSucceess_ThenGetReturns207MultiStatus()
         { 
             
-            Error weatherError = new Error
+            ErrorResponse weatherError = new ErrorResponse
             {
-                ErrorDetails = new ErrorDetails
+                Error = new Error
                 {
                     HttpStatusCode = 401
                 }

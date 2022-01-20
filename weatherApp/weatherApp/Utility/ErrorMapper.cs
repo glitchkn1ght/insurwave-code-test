@@ -13,19 +13,21 @@ namespace weatherApp.Utility
     
     public interface IErrorMapper
     {
-        public Task<Error> MapError(HttpResponseMessage payload, string resource);
+        public Task<ErrorResponse> MapError(HttpResponseMessage payload, string resource);
     }
     
     public class StandardErrorMapper : IErrorMapper
     {
 
-        public async Task<Error> MapError(HttpResponseMessage payload, string resource)
+        public async Task<ErrorResponse> MapError(HttpResponseMessage payload, string resource)
         {
-            Error error = JsonConvert.DeserializeObject<Error>(await payload.Content.ReadAsStringAsync());
-
-            error.ErrorDetails.HttpStatusCode = this.MapApiErrorCode(error.ErrorDetails.ApiCode);
+            string y = await payload.Content.ReadAsStringAsync();
             
-            error.ErrorDetails.Resource = resource;
+            ErrorResponse error = JsonConvert.DeserializeObject<ErrorResponse>(await payload.Content.ReadAsStringAsync());
+
+            error.Error.HttpStatusCode = this.MapApiErrorCode(error.Error.ApiCode);
+            
+            error.Error.Resource = resource;
 
             return error;
         }

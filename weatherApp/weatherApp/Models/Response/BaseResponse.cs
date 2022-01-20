@@ -9,6 +9,6 @@ namespace weatherApp.Models.Response
     {
         public bool IsSuccess { get; set; }
 
-        public Error Error { get; set; }
+        public ErrorResponse Error { get; set; }
     }
 }

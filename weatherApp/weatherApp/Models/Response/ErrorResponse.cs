@@ -7,12 +7,12 @@ namespace weatherApp.Models.Response
 {
     using Newtonsoft.Json;
 
-    public class Error
+    public class ErrorResponse
     {
-        public ErrorDetails ErrorDetails { get; set; }
+        public Error Error { get; set; }
     }
 
-    public class ErrorDetails
+    public class Error
     {
         public int HttpStatusCode { get; set; }
 

@@ -40,7 +40,6 @@ namespace weatherApp.Controllers
         /// <param name="includeAstronomy"> Set to true to include astronomy data in response</param>
         /// <param name="tempInCelcius"> A boolean to detemine the temperature format.  True or null = Celcius, False = Fahrenheit</param>
         /// <response code="200">Returns a forecast summary of weather and astronomy data for the location specified.</response>
-        /// <response code="206">Returns a forecast summary of weather for the location specified in order to be comptible with users of previous versions of this application</response>
         /// <response code="207">If there are multiple failure status codes from different parts of the request, returns a list of the errors.</response>
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
         /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  
@@ -48,7 +47,6 @@ namespace weatherApp.Controllers
         /// <response code="500">Interanl application ErrorResponse.</response>  
         [HttpGet("{locationName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastAndAstronomySummary))]
-        [ProducesResponseType(StatusCodes.Status206PartialContent, Type = typeof(CurrentForecastSummary))]
         [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<ErrorResponse>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorResponse))]

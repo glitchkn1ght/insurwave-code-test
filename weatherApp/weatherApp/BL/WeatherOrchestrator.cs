@@ -46,19 +46,21 @@ namespace weatherApp.BusinessLogic
 
             if (currentConditionsResponse.IsSuccessStatusCode)
             {
-                forecastResponse.IsSuccess = true;
-
                 this.Logger.LogInformation($"[Operation=interpretAPIForecastResponse], Status=Success, Message=Success code received from Current forecast endpoint, mapping data.");
 
                 forecastResponse.forecastSummary = await this.ForecastMapper.mapWeatherAPIResponse(currentConditionsResponse, tempInCelcius);
+
+                forecastResponse.IsSuccess = true;
             }
             else
             {
-                forecastResponse.IsSuccess = false;
+
                 
                 forecastResponse.Error = await this.ErrorMapper.MapError(currentConditionsResponse, "current");
 
                 this.Logger.LogWarning($"[Operation=InterpretAPIForecastResponse], Status=Failed, Message=Non success code received from Current forecast endpoint, details: { forecastResponse.Error.Error.HttpStatusCode}, {forecastResponse.Error.Error.ApiMessage}");
+
+                forecastResponse.IsSuccess = false;
             }
 
             return forecastResponse;

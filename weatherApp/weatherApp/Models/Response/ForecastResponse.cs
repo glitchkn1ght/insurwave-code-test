@@ -1,26 +1,14 @@
 ﻿//Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 20/01/2022 Ticket3 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Models.Response
 {
-    using Newtonsoft.Json;
+    using weatherApp.Models.Weather;
 
-    public class ErrorDetails
+    public class ForecastResponse : BaseResponse
     {
-        public Error error { get; set; }
+        public CurrentForecastSummary forecastSummary { get; set; }
     }
-
-    public class Error
-    {
-        public int HttpStatusCode { get; set; }
-
-        [JsonProperty("code")]
-        public int apiCode { get; set; }
-
-        [JsonProperty("message")]
-        public string apiMessage { get; set; }
-    }
-
 }

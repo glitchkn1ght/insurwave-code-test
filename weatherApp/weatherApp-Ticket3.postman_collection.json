@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "098919b1-0f41-4d82-b915-6759ece4d22c",
+		"name": "weatherApp-Ticket3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ticket3Get_AllParamsValid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london?locationDT=2022-01-16&tempInCelcius=true",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					],
+					"query": [
+						{
+							"key": "locationDT",
+							"value": "2022-01-16"
+						},
+						{
+							"key": "tempInCelcius",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket3Get_LocationDTParamNull",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london?tempInCelcius=false",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					],
+					"query": [
+						{
+							"key": "tempInCelcius",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket3Get_TempInCelciusdParamNull",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london?locationDT=2022-01-16",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					],
+					"query": [
+						{
+							"key": "locationDT",
+							"value": "2022-01-16"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket3Get_TempInCelciusdParamNull_AndLocationDTParamNull",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/london",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"london"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket3Get_AllParamsNullOrEmpty",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44337/weatherforecast/\"\"",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44337",
+					"path": [
+						"weatherforecast",
+						"\"\""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

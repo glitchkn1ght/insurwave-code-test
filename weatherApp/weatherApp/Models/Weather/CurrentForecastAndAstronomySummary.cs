@@ -1,17 +1,14 @@
-//Change History
+﻿//Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 13/01/2022 Ticket3 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace weatherApp.Models.Weather
 {
-    using Newtonsoft.Json;
-    public class CurrentForecast
+    public class CurrentForecastAndAstronomySummary
     {
-        [JsonProperty("Location")]
-        public Location WeatherLocation { get; set; }
+        public CurrentForecastSummary CurrentForecastSummary { get; set; }
 
-        [JsonProperty("current")]
-        public Current CurrentConditions { get; set; }
+        public CurrentAstronomySummary CurrentAstronomySummary { get; set; }
     }
 }

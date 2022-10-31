@@ -1,13 +1,14 @@
 //Change History
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// 19/04/2022 Ticket1 JS Team darkSaber - Initial version. 
+// 21/10/2022 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp
+namespace weatherAppIncludingAngular
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;
     using Serilog;
+    using weatherApp;
 
     public class Program
     {

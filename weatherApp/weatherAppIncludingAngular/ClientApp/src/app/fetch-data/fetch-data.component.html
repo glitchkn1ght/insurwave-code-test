@@ -1,0 +1,30 @@
+<h1 id="tableLabel">Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<!--<p *ngIf="!forecasts"><em>Loading...</em></p>-->
+<form #locationName="ngForm" (ngSubmit)="onClickSubmit(locationName.value)">
+<input type="text" name="locationName" placeholder="locationName" ngModel>
+<br />
+<br />
+<input type="submit" value="submit">
+</form>
+
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>City</th>
+      <th>Region</th>
+      <th>Country</th>
+      <th>Temperature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ forecast.city }}</td>
+      <td>{{ forecast.region }}</td>
+      <td>{{ forecast.country }}</td>
+      <td>{{ forecast.temperature }}</td>
+    </tr>
+  </tbody>
+</table>

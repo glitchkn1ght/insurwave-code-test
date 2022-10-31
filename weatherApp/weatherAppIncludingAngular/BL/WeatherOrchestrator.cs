@@ -10,7 +10,7 @@ namespace weatherApp.BusinessLogic
     using System.Net.Http;
     using System.Threading.Tasks;
     using weatherApp.Models.Response;
-    using weatherApp.Utility;
+    using weatherApp.Mappers;
 
     public interface IWeatherOrchestrator
     {

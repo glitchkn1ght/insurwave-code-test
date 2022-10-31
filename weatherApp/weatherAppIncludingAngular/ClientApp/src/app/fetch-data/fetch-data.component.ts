@@ -18,14 +18,8 @@ export class FetchDataComponent
   }
 
   ngOnInit() {}
+
   onClickSubmit(weatherForm: WeatherFormOptions)
-  {
-    alert("You have entered : " + weatherForm);
-
-    this.fetchWeatherData(weatherForm);
-  }
-
-  fetchWeatherData(weatherForm: WeatherFormOptions)
   {
     this.http.get<CurrentForecastAndAstronomySummary>(this.baseURL + 'weatherforecast/' + weatherForm.locationName + "?tempInCelcius=" + weatherForm.tempInCelcius + "&includeAstronomy=" + weatherForm.includeAstronomy).subscribe(result =>
       {

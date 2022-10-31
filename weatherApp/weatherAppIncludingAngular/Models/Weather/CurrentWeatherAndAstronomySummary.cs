@@ -5,8 +5,14 @@
 
 namespace weatherApp.Models.Weather
 {
-    public class CurrentForecastAndAstronomySummary
+    public class CurrentWeatherAndAstronomySummary
     {
+        public CurrentWeatherAndAstronomySummary()
+        {
+            this.CurrentForecastSummary = new CurrentForecastSummary();
+            this.CurrentAstronomySummary = new CurrentAstronomySummary();
+        }
+        
         public CurrentForecastSummary CurrentForecastSummary { get; set; }
 
         public CurrentAstronomySummary CurrentAstronomySummary { get; set; }

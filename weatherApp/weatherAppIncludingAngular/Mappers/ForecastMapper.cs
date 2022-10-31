@@ -3,7 +3,7 @@
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp.Utility
+namespace weatherApp.Mappers
 {
     using Newtonsoft.Json;
     using System;
@@ -29,7 +29,7 @@ namespace weatherApp.Utility
         {
             CurrentForecast fullForecast = JsonConvert.DeserializeObject<CurrentForecast>(await httpResponse.Content.ReadAsStringAsync());
 
-            CurrentForecastSummary forecastSummary = this.SummaryMapper.mapSummaryResponse(fullForecast, TempInCelcius);
+            CurrentForecastSummary forecastSummary = this.SummaryMapper.MapSummaryResponse(fullForecast, TempInCelcius);
 
             return forecastSummary;
         }

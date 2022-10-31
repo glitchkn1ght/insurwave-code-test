@@ -10,7 +10,7 @@ namespace weatherApp.Service
     using System.Net.Http;
     using System.Threading.Tasks;
     using weatherApp.Models.Configuration;
-    using weatherApp.Utility;
+    using weatherApp.Mappers;
     using weatherApp.BusinessLogic;
     using weatherApp.Models.Response;
 

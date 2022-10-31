@@ -1,5 +1,10 @@
 # The Insurwave code test
 
+James To Do
+- Handling front end errors
+- Make form prettier
+- Input Validation
+
 ## Introduction
 
 Let's imagine a ship operating company having vessels traveling across the globe. The operators located in one of the headquarters are responsible for communication with vessel captains during their journey.  

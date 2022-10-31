@@ -6,7 +6,7 @@
 namespace weatherApp.DependancyResolution
 {
     using Microsoft.Extensions.DependencyInjection;
-    using weatherApp.Utility;
+    using weatherApp.Mappers;
     using weatherApp.Service;
     using weatherApp.BusinessLogic;
 

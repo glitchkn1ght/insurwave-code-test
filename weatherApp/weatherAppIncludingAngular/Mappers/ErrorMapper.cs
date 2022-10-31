@@ -4,7 +4,7 @@
 // 12/01/2022 Ticket1 JS Team darkSaber - Refactored to map entire errordetails class.  
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp.Utility
+namespace weatherApp.Mappers
 {
     using Newtonsoft.Json;
     using System.Threading.Tasks;

@@ -40,77 +40,48 @@ namespace weatherApp.Controllers
         /// <param name="includeAstronomy"> Set to true to include astronomy data in response</param>
         /// <param name="tempInCelcius"> A boolean to detemine the temperature format.  True or null = Celcius, False = Fahrenheit</param>
         /// <response code="200">Returns a forecast summary of weather and astronomy data for the location specified.</response>
-        /// <response code="207">If there are multiple failure status codes from different parts of the request, returns a list of the errors.</response>
         /// <response code="400">If the request url is invalid or parameters are incorrect or no matching location found.</response>
         /// <response code="401">If the request is unauthorized e.g. apiKey is missing or invalid.</response>  
         /// <response code="403">If the apiKey has has exceeeded usage limit or has been disabled.</response>  
         /// <response code="500">Interanl application ErrorResponse.</response>  
         [HttpGet("{locationName}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentForecastAndAstronomySummary))]
-        [ProducesResponseType(StatusCodes.Status207MultiStatus, Type = typeof(List<ErrorResponse>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CurrentWeatherAndAstronomySummary))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorResponse))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorResponse))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse))]
-        public async Task<IActionResult> Get(string locationName, bool? tempInCelcius, bool? includeAstronomy)
+        public async Task<IActionResult> Get(string locationName, bool tempInCelcius = true, bool includeAstronomy = false)
         {
             try
             {
-                if (!tempInCelcius.HasValue) //Set to true if null to avoid breaking existing functionality
+                CurrentWeatherAndAstronomySummary summary = new CurrentWeatherAndAstronomySummary();
+
+                ForecastResponse forecastResponse = await this.WeatherService.GetCurrentConditions(locationName, tempInCelcius);
+
+                if (!forecastResponse.IsSuccess)
                 {
-                    tempInCelcius = true;
-                }
-
-                 ForecastResponse forecastResponse = await this.WeatherService.GetCurrentConditions(locationName, tempInCelcius.GetValueOrDefault());
-
-                if (!includeAstronomy.HasValue) //Set to true if null to avoid breaking existing functionality
-                {
-                    includeAstronomy = false;
-                }
-
-                if (!includeAstronomy.Value) //Return old model if new param not supplied to breaking existing functionality
-                {
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Success, Message= Null Value Passed for includeAstronomy retrieving weather summary only");
-
-                    if (forecastResponse.IsSuccess)
-                    {
-                        return new OkObjectResult(forecastResponse.forecastSummary);
-                    }
+                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= Error retrieving weather data from weatherService");
 
                     return new ObjectResult(forecastResponse.Error) { StatusCode = forecastResponse.Error.Error.HttpStatusCode };
                 }
 
-                AstronomyResponse astronomyResponse = await this.WeatherService.GetAstronomyConditions(locationName);
+                summary.CurrentForecastSummary = forecastResponse.forecastSummary;
 
-                if (forecastResponse.IsSuccess && astronomyResponse.IsSuccess)
+                if (includeAstronomy)
                 {
-                    CurrentForecastAndAstronomySummary summary = new CurrentForecastAndAstronomySummary
+                    AstronomyResponse astronomyResponse = await this.WeatherService.GetAstronomyConditions(locationName);
+
+                    if (!astronomyResponse.IsSuccess)
                     {
-                        CurrentForecastSummary = forecastResponse.forecastSummary,
-                        CurrentAstronomySummary = astronomyResponse.AstronomySummary
-                    };
+                        this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= Error retrieving astronomy data from weatherService");
 
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Success, Message= Succesfully retrieved weather and astronomy data from weatherService");
+                        return new ObjectResult(astronomyResponse.Error) { StatusCode = forecastResponse.Error.Error.HttpStatusCode };
+                    }
 
-                    return new OkObjectResult(summary);
+                    summary.CurrentAstronomySummary = astronomyResponse.AstronomySummary;
                 }
 
-                if (!forecastResponse.IsSuccess)
-                {
-                    this.ErrorList.Add(forecastResponse.Error);
-
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= ErrorResponse retrieving weather data from weatherService");
-                }
-
-                if (!astronomyResponse.IsSuccess)
-                {
-                    this.ErrorList.Add(astronomyResponse.Error);
-
-                    this.Logger.LogInformation($"[Operation=Get(WeatherForecast)], Status=Failure, Message= ErrorResponse retrieving astronomy data from weatherService");
-                }
-
-                return new ObjectResult(this.ErrorList) { StatusCode = 207 };
-
+                return new OkObjectResult(summary);
             }
 
             catch (Exception ex)

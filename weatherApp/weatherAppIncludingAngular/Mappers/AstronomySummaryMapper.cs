@@ -3,10 +3,9 @@
 // 14/01/2022 Ticket-3 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp.Utility
+namespace weatherApp.Mappers
 {
     using weatherApp.Models.Weather;
-    using weatherApp.Utility;
 
     public interface IAstronomySummaryMapper
     {

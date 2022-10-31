@@ -96,7 +96,7 @@ namespace weatherAppTests
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london",null ,true).Result;
 
             Assert.AreEqual(200, actual.StatusCode);
-            Assert.IsInstanceOf<CurrentForecastAndAstronomySummary>(actual.Value);
+            Assert.IsInstanceOf<CurrentWeatherAndAstronomySummary>(actual.Value);
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace weatherAppTests
             ObjectResult actual = (ObjectResult)this.WeatherForecastController.Get("london", true, true).Result;
 
             Assert.AreEqual(200, actual.StatusCode);
-            Assert.IsInstanceOf<CurrentForecastAndAstronomySummary>(actual.Value);
+            Assert.IsInstanceOf<CurrentWeatherAndAstronomySummary>(actual.Value);
         }
 
         [Test]

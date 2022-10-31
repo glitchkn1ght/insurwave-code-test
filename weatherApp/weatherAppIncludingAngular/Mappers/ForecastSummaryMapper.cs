@@ -3,7 +3,7 @@
 // 12/01/2022 Ticket1 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace weatherApp.Utility
+namespace weatherApp.Mappers
 {
     using Microsoft.Extensions.Options;
     using weatherApp.Models.Configuration;
@@ -11,12 +11,12 @@ namespace weatherApp.Utility
 
     public interface IForecastSummaryMapper 
     {
-        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast, bool tempInCelcius);
+        public CurrentForecastSummary MapSummaryResponse(CurrentForecast fullForecast, bool tempInCelcius);
     }
 
     public class StandardSummaryMapper : IForecastSummaryMapper
     {
-        public CurrentForecastSummary mapSummaryResponse(CurrentForecast fullForecast, bool tempInCelcius)
+        public CurrentForecastSummary MapSummaryResponse(CurrentForecast fullForecast, bool tempInCelcius)
         {
             CurrentForecastSummary forecastSummary = new CurrentForecastSummary
             {

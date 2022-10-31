@@ -18,35 +18,42 @@ export class FetchDataComponent
   }
 
   ngOnInit() {}
-  onClickSubmit(result)
+  onClickSubmit(weatherForm: WeatherFormOptions)
   {
-    alert("You have entered : " + result.locationName);
+    alert("You have entered : " + weatherForm);
 
-    this.fetchWeatherData(result.locationName);
+    this.fetchWeatherData(weatherForm);
   }
 
-  fetchWeatherData(location: string)
+  fetchWeatherData(weatherForm: WeatherFormOptions)
   {
-    this.http.get<CurrentForecastAndAstronomySummary>(this.baseURL + 'weatherforecast/' + location).subscribe(result =>
+    this.http.get<CurrentForecastAndAstronomySummary>(this.baseURL + 'weatherforecast/' + weatherForm.locationName + "?tempInCelcius=" + weatherForm.tempInCelcius + "&includeAstronomy=" + weatherForm.includeAstronomy).subscribe(result =>
       {
         this.forecast = result;
       }, error => console.error(error));
   }
 }
 
+interface WeatherFormOptions
+{
+  locationName : string;
+  tempInCelcius: boolean
+  includeAstronomy: boolean
+}
+
 interface CurrentForecastAndAstronomySummary
 {
-  CurrentForecastSummary: CurrentForecastSummary
-  CurrentAstronomySummary : CurrentAstronomySummary
+  currentForecastSummary: CurrentForecastSummary
+  currentAstronomySummary : CurrentAstronomySummary
 }
 
 interface CurrentForecastSummary
 {
   city: string;
-  region: number;
+  region: string;
   country: string;
   localTime: string;
-  temperature: string;
+  temperature: number;
 }
 
 interface CurrentAstronomySummary

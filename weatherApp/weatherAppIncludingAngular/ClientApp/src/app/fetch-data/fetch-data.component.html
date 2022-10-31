@@ -18,6 +18,8 @@
       <th>Country</th>
       <th>Local Time</th>
       <th>Temperature</th>
+      <th>SunriseTime</th>
+      <th>SunsetTime</th>
     </tr>
   </thead>
   <tbody>
@@ -27,6 +29,8 @@
       <td>{{ forecast.currentForecastSummary.country }}</td>
       <td>{{ forecast.currentForecastSummary.localTime }}</td>
       <td>{{ forecast.currentForecastSummary.temperature }}</td>
+      <td>{{ forecast.currentAstronomySummary.sunriseTime }}</td>
+      <td>{{ forecast.currentAstronomySummary.sunsetTime }}</td>
     </tr>
   </tbody>
 </table>
